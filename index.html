@@ -12,7 +12,7 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #d4edda; /* Light green background */
+            background-color: #d4edda;
         }
     </style>
 </head>
@@ -20,18 +20,23 @@
     <div id="root"></div>
     <script type="text/babel">
         function App() {
-            const address = "TFUv4WbbTMhCLEX8XAccrjmP9fp6jPzCsb";
+            const addressMapping = {
+                "USDT TRC20": "TLVD2d4UtHAFFUkgfSGatcLQeXdu4Xz2Yv",
+                "USDT BEP20": "0x6142b1702d82eafb25b6b7b4cad91f1cab0ffc2a",
+                "USDT ERC20": "0x6142b1702d82eafb25b6b7b4cad91f1cab0ffc2a",
+                "USDT POLYGON": "0x6142b1702d82eafb25b6b7b4cad91f1cab0ffc2a",
+                "USDT SOLANA": "2YR2RHezaWWLZvi8evtYwzWtJWH4ExGzi1nFmuezPepK",
+                "USDT ARBITRUM": "0x6142b1702d82eafb25b6b7b4cad91f1cab0ffc2a"
+            };
 
-            // Get the URL parameters
             const params = new URLSearchParams(window.location.search);
-            const amount = `${params.get('amount')} USDT` || "1.0001 USDT"; // Default to "1.0001 USDT" if not found
-            const chain = params.get('chain') || "USDT ERC20"; // Default to "USDT ERC20" if not found
-            
-            // Create QR code data
+            const amount = `${params.get('amount')} USDT` || "1.0001 USDT";
+            const chain = params.get('chain') || "USDT ERC20";
+            const address = addressMapping[chain] || addressMapping["USDT ERC20"];
             const qrData = `address:${address},amount:${amount},chain:${chain}`;
             const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrData)}&size=200x200`;
 
-            const [timeLeft, setTimeLeft] = React.useState(600); // 10 minutes in seconds
+            const [timeLeft, setTimeLeft] = React.useState(300);
             const [qrExpired, setQrExpired] = React.useState(false);
 
             React.useEffect(() => {
