@@ -21,8 +21,14 @@
     <script type="text/babel">
         function App() {
             const address = "TFUv4WbbTMhCLEX8XAccrjmP9fp6jPzCsb";
-            const amount = "1.0001 USDT";
-            const qrData = `address:${address},amount:${amount}`;
+
+            // Get the URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const amount = `${params.get('amount')} USDT` || "1.0001 USDT"; // Default to "1.0001 USDT" if not found
+            const chain = params.get('chain') || "USDT ERC20"; // Default to "USDT ERC20" if not found
+            
+            // Create QR code data
+            const qrData = `address:${address},amount:${amount},chain:${chain}`;
             const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrData)}&size=200x200`;
 
             const [timeLeft, setTimeLeft] = React.useState(600); // 10 minutes in seconds
@@ -31,7 +37,7 @@
             React.useEffect(() => {
                 if (timeLeft > 0) {
                     const timer = setInterval(() => {
-                        setTimeLeft(timeLeft - 1);
+                        setTimeLeft((prevTime) => prevTime - 1);
                     }, 1000);
                     return () => clearInterval(timer);
                 } else {
@@ -42,7 +48,15 @@
             const formatTime = (seconds) => {
                 const minutes = Math.floor(seconds / 60);
                 const remainingSeconds = seconds % 60;
-                return `${minutes}m ${remainingSeconds}s`;
+                return `${minutes}m ${remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds}s`;
+            };
+
+            const copyToClipboard = (text) => {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert("Copied to clipboard: " + text);
+                }).catch(err => {
+                    console.error("Failed to copy: ", err);
+                });
             };
 
             return (
@@ -52,26 +66,32 @@
                             <div className="bg-blue-500 text-white rounded-full p-2">
                                 <i className="fas fa-university"></i>
                             </div>
-                            <h1 className="ml-2 text-lg font-bold">Soumo's Pay</h1> {/* Changed to text-lg */}
+                            <h1 className="ml-2 text-lg font-bold">Soumo's Pay</h1>
                         </div>
                         <div className="text-center mb-4">
-                            <h2 className="text-base font-bold">Payment Amount</h2> {/* Changed to text-base */}
-                            <p className="text-xl text-blue-500 font-bold">{amount} <i className="fas fa-copy text-sm"></i></p> {/* Changed to text-xl */}
+                            <h2 className="text-base font-bold">Payment Amount</h2>
+                            <p className="text-xl text-blue-500 font-bold">
+                                {amount} 
+                                <i className="fas fa-copy text-sm cursor-pointer" onClick={() => copyToClipboard(amount)}></i>
+                            </p>
                             <p className="text-gray-500">Please make the transfer amount consistent with the order amount</p>
                         </div>
                         <div className="text-center mb-4">
-                            <h2 className="text-base font-bold">Payment Address</h2> {/* Changed to text-base */}
+                            <h2 className="text-base font-bold">Payment Address</h2>
                             {qrExpired ? (
                                 <p className="text-red-500">QR Code Expired</p>
                             ) : (
                                 <img src={qrCodeUrl} alt="QR code for payment address" className="mx-auto mb-2"/>
                             )}
-                            <p className="text-gray-500">{address} <i className="fas fa-copy text-sm"></i></p>
+                            <p className="text-gray-500">
+                                {address} 
+                                <i className="fas fa-copy text-sm cursor-pointer" onClick={() => copyToClipboard(address)}></i>
+                            </p>
                         </div>
                         <div className="flex justify-between text-gray-500 mb-4">
                             <div>
-                                <p>Payment time:</p>
-                                <p>Order ID:</p>
+                                <p>Payment Time:</p>
+                                <p>Transaction ID:</p>
                             </div>
                             <div className="text-right">
                                 <p>{formatTime(timeLeft)}</p>
@@ -79,13 +99,13 @@
                             </div>
                         </div>
                         <div className="text-center mb-4">
-                            <button className="bg-blue-500 text-white px-4 py-2 rounded-full">Buy USDT <i className="fas fa-arrow-right"></i></button>
+                            <button className="bg-blue-500 text-white px-4 py-2 rounded-full">I Have Paid <i className="fas fa-arrow-right"></i></button>
                         </div>
                         <div>
-                            <h2 className="text-base font-bold mb-2">Payment Instructions</h2> {/* Changed to text-base */}
-                            <ul className="list-disc list-inside text-gray-500 text-sm"> {/* Changed to text-sm */}
+                            <h2 className="text-base font-bold mb-2">Payment Instructions</h2>
+                            <ul className="list-disc list-inside text-gray-500 text-sm">
                                 <li>If you use the TP wallet to transfer, please select the currency type as USDT. It is recommended to use exchanges and imToken transfers.</li>
-                                <li>After the payment is successful, it usually takes about one minute to arrive at the account successfully.</li>
+                                <li>If your payment was successful but has not been automatically detected, please click the "I Have Paid" button below to confirm.</li>
                                 <li>Click the amount and wallet address area to copy directly.</li>
                                 <li>The transfer amount needs to be consistent with the order amount shown above, otherwise the payment will fail.</li>
                             </ul>
