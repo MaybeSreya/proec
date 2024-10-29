@@ -1,122 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soumo's Pay</title>
+    <title>Tonkeeper</title>
     <script src="https://unpkg.com/react/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
     <style>
         body {
+            background-color: #0B0F1C;
+            color: #FFFFFF;
             font-family: 'Arial', sans-serif;
-            background-color: #d4edda;
         }
     </style>
 </head>
 <body>
     <div id="root"></div>
     <script type="text/babel">
-        function App() {
-            const addressMapping = {
-                "USDT TRC20": "TLVD2d4UtHAFFUkgfSGatcLQeXdu4Xz2Yv",
-                "USDT BEP20": "0x6142b1702d82eafb25b6b7b4cad91f1cab0ffc2a",
-                "USDT ERC20": "0x6142b1702d82eafb25b6b7b4cad91f1cab0ffc2a",
-                "USDT POLYGON": "0x6142b1702d82eafb25b6b7b4cad91f1cab0ffc2a",
-                "USDT SOLANA": "2YR2RHezaWWLZvi8evtYwzWtJWH4ExGzi1nFmuezPepK",
-                "USDT ARBITRUM": "0x6142b1702d82eafb25b6b7b4cad91f1cab0ffc2a"
-            };
-
-            const params = new URLSearchParams(window.location.search);
-            const amount = `${params.get('amount')} USDT` || "1.0001 USDT";
-            const chain = params.get('chain') || "USDT ERC20";
-            const address = addressMapping[chain] || addressMapping["USDT ERC20"];
-            const qrData = `address:${address},amount:${amount},chain:${chain}`;
-            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrData)}&size=200x200`;
-
-            const [timeLeft, setTimeLeft] = React.useState(300);
-            const [qrExpired, setQrExpired] = React.useState(false);
-
-            React.useEffect(() => {
-                if (timeLeft > 0) {
-                    const timer = setInterval(() => {
-                        setTimeLeft((prevTime) => prevTime - 1);
-                    }, 1000);
-                    return () => clearInterval(timer);
-                } else {
-                    setQrExpired(true);
-                }
-            }, [timeLeft]);
-
-            const formatTime = (seconds) => {
-                const minutes = Math.floor(seconds / 60);
-                const remainingSeconds = seconds % 60;
-                return `${minutes}m ${remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds}s`;
-            };
-
-            const copyToClipboard = (text) => {
-                navigator.clipboard.writeText(text).catch(err => {
-                    console.error("Failed to copy: ", err);
-                });
-            };
-
+        const App = () => {
             return (
-                <div className="flex flex-col items-center p-4 md:p-8">
-                    <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
-                        <div className="flex items-center mb-4">
-                            <div className="bg-blue-500 text-white rounded-full p-2">
-                                <i className="fas fa-university"></i>
+                <div className="flex flex-col items-center justify-center min-h-screen p-4">
+                    <div className="w-full max-w-md">
+                        <div className="text-center mb-8">
+                            <h2 className="text-3xl font-bold text-white">Welcome to <span className="text-blue-500">Tonkeeper</span></h2>
+                        </div>
+                        <div className="mb-8">
+                            <div className="flex items-start mb-4">
+                                <i className="fas fa-rocket text-blue-500 text-2xl mr-4"></i>
+                                <div>
+                                    <h3 className="text-xl font-bold text-white">World-class speed</h3>
+                                    <p className="text-gray-400">Thanks to the unique architecture of The Open Network, TON transactions are settled in seconds.</p>
+                                </div>
                             </div>
-                            <h1 className="ml-2 text-lg font-bold">Soumo's Pay</h1>
-                        </div>
-                        <div className="text-center mb-4">
-                            <h2 className="text-base font-bold">Payment Amount</h2>
-                            <p className="text-xl text-blue-500 font-bold">
-                                {amount} 
-                                <i className="fas fa-copy text-sm cursor-pointer ml-2" onClick={() => copyToClipboard(amount)}></i>
-                            </p>
-                            <p className="text-gray-500">Please make the transfer amount consistent with the order amount</p>
-                        </div>
-                        <div className="text-center mb-4">
-                            <h2 className="text-base font-bold">Payment Address</h2>
-                            {qrExpired ? (
-                                <p className="text-red-500">QR Code Expired</p>
-                            ) : (
-                                <img src={qrCodeUrl} alt="QR code for payment address" className="mx-auto mb-2"/>
-                            )}
-                            <p className="text-gray-500">
-                                {address} 
-                                <i className="fas fa-copy text-sm cursor-pointer ml-2" onClick={() => copyToClipboard(address)}></i>
-                            </p>
-                        </div>
-                        <div className="flex justify-between text-gray-500 mb-4">
-                            <div>
-                                <p>Payment Time:</p>
-                                <p>Transaction ID:</p>
-                            </div>
-                            <div className="text-right">
-                                <p>{formatTime(timeLeft)}</p>
-                                <p>UPay202410170343347594288</p>
+                            <div className="flex items-start">
+                                <i className="fas fa-shield-alt text-blue-500 text-2xl mr-4"></i>
+                                <div>
+                                    <h3 className="text-xl font-bold text-white">End-to-end security</h3>
+                                    <p className="text-gray-400">Tonkeeper stores your cryptographic keys on your device. All trades are executed via decentralized protocols so that your crypto never ends up in the hands of centralized exchanges.</p>
+                                </div>
                             </div>
                         </div>
-                        <div className="text-center mb-4">
-                            <button className="bg-blue-500 text-white px-4 py-2 rounded-full">I Have Paid <i className="fas fa-arrow-right"></i></button>
-                        </div>
-                        <div>
-                            <h2 className="text-base font-bold mb-2">Payment Instructions</h2>
-                            <ul className="list-disc list-inside text-gray-500 text-sm">
-                                <li>If you use the TP wallet to transfer, please select the currency type as USDT. It is recommended to use exchanges and imToken transfers.</li>
-                                <li>If your payment was successful but has not been automatically detected, please click the "I Have Paid" button below to confirm.</li>
-                                <li>Click the amount and wallet address area to copy directly.</li>
-                                <li>The transfer amount needs to be consistent with the order amount shown above, otherwise the payment will fail.</li>
-                            </ul>
-                        </div>
+                        <button className="w-full py-4 bg-blue-500 text-white text-xl font-bold rounded-lg">Get started</button>
                     </div>
                 </div>
             );
-        }
+        };
 
         ReactDOM.render(<App />, document.getElementById('root'));
     </script>
