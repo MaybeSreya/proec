@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soumo's Pay</title>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #d4edda; /* Light green background */
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        function App() {
+            const address = "TFUv4WbbTMhCLEX8XAccrjmP9fp6jPzCsb";
+            const amount = "1.0001 USDT";
+            const qrData = `address:${address},amount:${amount}`;
+            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrData)}&size=200x200`;
+
+            const [timeLeft, setTimeLeft] = React.useState(600); // 10 minutes in seconds
+            const [qrExpired, setQrExpired] = React.useState(false);
+
+            React.useEffect(() => {
+                if (timeLeft > 0) {
+                    const timer = setInterval(() => {
+                        setTimeLeft(timeLeft - 1);
+                    }, 1000);
+                    return () => clearInterval(timer);
+                } else {
+                    setQrExpired(true);
+                }
+            }, [timeLeft]);
+
+            const formatTime = (seconds) => {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = seconds % 60;
+                return `${minutes}m ${remainingSeconds}s`;
+            };
+
+            return (
+                <div className="flex flex-col items-center p-4 md:p-8">
+                    <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
+                        <div className="flex items-center mb-4">
+                            <div className="bg-blue-500 text-white rounded-full p-2">
+                                <i className="fas fa-university"></i>
+                            </div>
+                            <h1 className="ml-2 text-lg font-bold">Soumo's Pay</h1> {/* Changed to text-lg */}
+                        </div>
+                        <div className="text-center mb-4">
+                            <h2 className="text-base font-bold">Payment Amount</h2> {/* Changed to text-base */}
+                            <p className="text-xl text-blue-500 font-bold">{amount} <i className="fas fa-copy text-sm"></i></p> {/* Changed to text-xl */}
+                            <p className="text-gray-500">Please make the transfer amount consistent with the order amount</p>
+                        </div>
+                        <div className="text-center mb-4">
+                            <h2 className="text-base font-bold">Payment Address</h2> {/* Changed to text-base */}
+                            {qrExpired ? (
+                                <p className="text-red-500">QR Code Expired</p>
+                            ) : (
+                                <img src={qrCodeUrl} alt="QR code for payment address" className="mx-auto mb-2"/>
+                            )}
+                            <p className="text-gray-500">{address} <i className="fas fa-copy text-sm"></i></p>
+                        </div>
+                        <div className="flex justify-between text-gray-500 mb-4">
+                            <div>
+                                <p>Payment time:</p>
+                                <p>Order ID:</p>
+                            </div>
+                            <div className="text-right">
+                                <p>{formatTime(timeLeft)}</p>
+                                <p>UPay202410170343347594288</p>
+                            </div>
+                        </div>
+                        <div className="text-center mb-4">
+                            <button className="bg-blue-500 text-white px-4 py-2 rounded-full">Buy USDT <i className="fas fa-arrow-right"></i></button>
+                        </div>
+                        <div>
+                            <h2 className="text-base font-bold mb-2">Payment Instructions</h2> {/* Changed to text-base */}
+                            <ul className="list-disc list-inside text-gray-500 text-sm"> {/* Changed to text-sm */}
+                                <li>If you use the TP wallet to transfer, please select the currency type as USDT. It is recommended to use exchanges and imToken transfers.</li>
+                                <li>After the payment is successful, it usually takes about one minute to arrive at the account successfully.</li>
+                                <li>Click the amount and wallet address area to copy directly.</li>
+                                <li>The transfer amount needs to be consistent with the order amount shown above, otherwise the payment will fail.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
