@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Soumo's Pay</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/react/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
@@ -18,6 +19,8 @@
         function App() {
             const [amount, setAmount] = React.useState(1);
             const [customAmount, setCustomAmount] = React.useState('');
+            const [selectedChain, setSelectedChain] = React.useState('USDT ERC20');
+            const [showChainOptions, setShowChainOptions] = React.useState(false);
 
             const handleAmountClick = (value) => {
                 setAmount(value);
@@ -30,6 +33,11 @@
             };
 
             const displayAmount = customAmount || amount;
+
+            const handleChainSelect = (chain) => {
+                setSelectedChain(chain);
+                setShowChainOptions(false);
+            };
 
             return (
                 <div className="flex flex-col items-center p-4">
@@ -49,9 +57,19 @@
                         </div>
                         <div className="mb-4">
                             <label className="block text-lg font-bold mb-2">Select Chain</label>
-                            <div className="flex items-center border rounded-lg p-2">
-                                <span>USDT (TRC20-ERC20)</span>
-                                <i className="fas fa-chevron-down ml-auto"></i>
+                            <div className="relative">
+                                <div className="flex items-center border rounded-lg p-2 cursor-pointer" onClick={() => setShowChainOptions(!showChainOptions)}>
+                                    <span>{selectedChain}</span>
+                                    <i className="fas fa-chevron-down ml-auto"></i>
+                                </div>
+                                {showChainOptions && (
+                                    <div className="absolute w-full bg-white border rounded-lg mt-1 z-10">
+                                        <div className="p-2 cursor-pointer hover:bg-gray-200" onClick={() => handleChainSelect('USDT ERC20')}>USDT ERC20</div>
+                                        <div className="p-2 cursor-pointer hover:bg-gray-200" onClick={() => handleChainSelect('USDT TRC20')}>USDT TRC20</div>
+                                        <div className="p-2 cursor-pointer hover:bg-gray-200" onClick={() => handleChainSelect('USDT BEP20')}>USDT BEP20</div>
+                                        <div className="p-2 cursor-pointer hover:bg-gray-200" onClick={() => handleChainSelect('USDT TON')}>USDT TON</div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <div className="mb-4">
