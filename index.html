@@ -52,9 +52,7 @@
             };
 
             const copyToClipboard = (text) => {
-                navigator.clipboard.writeText(text).then(() => {
-                    alert("Copied to clipboard: " + text);
-                }).catch(err => {
+                navigator.clipboard.writeText(text).catch(err => {
                     console.error("Failed to copy: ", err);
                 });
             };
@@ -72,7 +70,7 @@
                             <h2 className="text-base font-bold">Payment Amount</h2>
                             <p className="text-xl text-blue-500 font-bold">
                                 {amount} 
-                                <i className="fas fa-copy text-sm cursor-pointer" onClick={() => copyToClipboard(amount)}></i>
+                                <i className="fas fa-copy text-sm cursor-pointer ml-2" onClick={() => copyToClipboard(amount)}></i>
                             </p>
                             <p className="text-gray-500">Please make the transfer amount consistent with the order amount</p>
                         </div>
@@ -85,7 +83,7 @@
                             )}
                             <p className="text-gray-500">
                                 {address} 
-                                <i className="fas fa-copy text-sm cursor-pointer" onClick={() => copyToClipboard(address)}></i>
+                                <i className="fas fa-copy text-sm cursor-pointer ml-2" onClick={() => copyToClipboard(address)}></i>
                             </p>
                         </div>
                         <div className="flex justify-between text-gray-500 mb-4">
