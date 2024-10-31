@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Soumo's Pay</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background: #eaecfa;
+        }
+
+        .loader {
+            width: 250px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            font-family: helvetica, arial, sans-serif;
+            text-transform: uppercase;
+            font-weight: 900;
+            color: #ce4233;
+            letter-spacing: 0.2em;
+        }
+
+        .loader::before, .loader::after {
+            content: "";
+            display: block;
+            width: 15px;
+            height: 15px;
+            background: #ce4233;
+            position: absolute;
+            animation: load .7s infinite alternate ease-in-out;
+        }
+
+        .loader::before {
+            top: 0;
+        }
+
+        .loader::after {
+            bottom: 0;
+        }
+
+        @keyframes load {
+            0% { left: 0; height: 30px; width: 15px }
+            50% { height: 8px; width: 40px }
+            100% { left: 235px; height: 30px; width: 15px}
+        }
+
+        .content {
+            display: none; /* Initially hide content */
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-green-100 text-black">
+    <div class="loader">Loading...</div>
+    <div id="root" class="content"></div>
+
+    <script type="text/babel">
+        function App() {
+            const [amount, setAmount] = React.useState(1);
+            const [customAmount, setCustomAmount] = React.useState('');
+            const [selectedChain, setSelectedChain] = React.useState('USDT-BEP20');
+            const [showChainOptions, setShowChainOptions] = React.useState(false);
+            const [transactionId, setTransactionId] = React.useState('');
+
+            const handleAmountClick = (value) => {
+                setAmount(value);
+                setCustomAmount('');
+            };
+
+            const handleCustomAmountChange = (e) => {
+                setCustomAmount(e.target.value);
+                setAmount('');
+            };
+
+            const displayAmount = customAmount || amount;
+
+            const handleChainSelect = (chain) => {
+                setSelectedChain(chain);
+                setShowChainOptions(false);
+            };
+
+            const generateTransactionId = () => {
+                const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                const numbers = Math.floor(Math.random() * 1000000000); // Generate random number
+                const randomLetters = Array.from({ length: Math.floor(Math.random() * 2) + 3 }, () => letters.charAt(Math.floor(Math.random() * letters.length))).join('');
+                return `${randomLetters}${numbers}`;
+            };
+
+            React.useEffect(() => {
+                const randomTime = Math.floor(Math.random() * (8 - 2 + 1) + 2) * 1000; // Random time in milliseconds
+                const timer = setTimeout(() => {
+                    document.querySelector('.loader').style.display = 'none';
+                    document.querySelector('#root').style.display = 'block';
+                    document.querySelector('#root').classList.add('fade-in');
+                    setTransactionId(generateTransactionId()); // Generate transaction ID when loading is done
+                }, randomTime);
+
+                return () => clearTimeout(timer);
+            }, []);
+
+            return (
+                <div className="flex flex-col items-center p-4">
+                    <div className="w-full max-w-md">
+                        <div className="flex justify-between items-center mb-4">
+                            <div className="flex items-center">
+                                <div className=" bg-blue-500 text-white rounded-full p-2">
+                                    <i className="fas fa-university"></i>
+                                </div>
+                                <span className="ml-2 text-lg font-bold">Soumo's Pay</span>
+                            </div>
+                            <div className="flex items-center">
+                                <i className="fas fa-globe"></i>
+                                <span class ="ml-1 text-sm">EN</span>
+                                <i className="fas fa-chevron-down ml-1"></i>
+                            </div>
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-base font-bold mb-2">Select Chain</label>
+                            <div className="relative">
+                                <div className="flex items-center border rounded-lg p-2 cursor-pointer" onClick={() => setShowChainOptions(!showChainOptions)}>
+                                    <span className="text-sm">{selectedChain}</span>
+                                    <i className="fas fa-chevron-down ml-auto"></i>
+                                </div>
+                                {showChainOptions && (
+                                    <div className="absolute w-full bg-white border rounded-lg mt-1 z-10">
+                                        <div className="p-2 cursor-pointer hover:bg-gray-200 text-sm" onClick={() => handleChainSelect('USDT-ERC20')}>USDT-ERC20</div>
+                                        <div className="p-2 cursor-pointer hover:bg-gray-200 text-sm" onClick={() => handleChainSelect('USDT-TRC20')}>USDT-TRC20</div>
+                                        <div className="p-2 cursor-pointer hover:bg-gray-200 text-sm" onClick={() => handleChainSelect('USDT-BEP20')}>USDT-BEP20</div>
+                                        <div className="p-2 cursor-pointer hover:bg-gray-200 text-sm" onClick={() => handleChainSelect('USDT-SOLANA')}>USDT-SOLANA</div>
+                                        <div className="p-2 cursor-pointer hover:bg-gray-200 text-sm" onClick={() => handleChainSelect('USDT-POLYGON')}>USDT-POLYGON</div>
+                                        <div className="p-2 cursor-pointer hover:bg-gray-200 text-sm" onClick={() => handleChainSelect('USDT-ARBITIUM')}>USDT-ARBITIUM</div>
+                                        <div className="p-2 cursor-pointer hover:bg-gray-200 text-sm" onClick={() => handleChainSelect('USDT-TON')}>USDT-TON</div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-base font-bold mb-2">Payment Amount (USDT)</label>
+                            <div className="grid grid-cols-4 gap-2">
+                                <button className={`border rounded-lg p-2 text-center text-sm ${amount === 1 ? 'bg-blue-100' : ''}`} onClick={() => handleAmountClick(1)}>1</button>
+                                <button className={`border rounded-lg p-2 text-center text-sm ${amount === 50 ? 'bg-blue-100' : ''}`} onClick={() => handleAmountClick(50)}>50</button>
+                                <button className={`border rounded-lg p-2 text-center text-sm ${amount === 100 ? 'bg-blue-100' : ''}`} onClick={() => handleAmountClick(100)}>100</button>
+                                <button className={`border rounded-lg p-2 text-center text-sm ${amount === 500 ? 'bg-blue-100' : ''}`} onClick={() => handleAmountClick(500)}>500</button>
+                            </div>
+                            <div className="mt-2 border rounded-lg p-2 text-gray-400 flex items-center">
+                                <input type="number" placeholder="Please enter custom amount" className="flex-grow bg-transparent outline-none text-sm" value={customAmount} onChange={handleCustomAmountChange}/>
+                                <span className="text-sm">USDT</span>
+                            </div>
+                        </div>
+                        <div className="mb-4 flex items-center">
+                            <span className="block text-xs">Transaction ID : {transactionId}</span>
+                            <i className="fas fa-sync-alt ml-2"></i>
+                        </div>
+                        <button 
+                            className="w-full bg-blue-500 text-white rounded-lg p-2 text-center mb-4 text-sm"
+                            onClick={() => {
+                                const paymentAmount = displayAmount || 0;
+                                const chain = selectedChain.replace(/\s+/g, '%20');
+                                window.location.href = `pay.html?amount=${paymentAmount}&chain=${chain}`;
+                            }}
+                        >
+ {displayAmount ? `Pay ${displayAmount} USDT` : 'Pay USDT'}
+                        </button>
+                        <div className="text-center text-blue-500 text-sm">
+                            <a href="#">Buy Tether (USDT)</a>
+                        </div>
+                    </div>
+                    <div className="fixed bottom-4 left-4">
+                        <div className="bg-white text-black rounded-full p-2">
+                            <i className="fas fa-qrcode"></i>
+                        </div>
+                    </div>
+                    <div className="fixed bottom-4 w-full text-center text-gray-400 text-sm">
+                        Copyright 2024 © Soumo All Rights Reserved.
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
