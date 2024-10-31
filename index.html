@@ -1,206 +1,137 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Pay.me</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay.me by Soumo</title>
     <script src="https://unpkg.com/react/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            margin: 0;
-            overflow: hidden;
-        }
-
-        .full-page-gradient {
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(to bottom right, lightgreen, lightblue 25%, lightpink 50%, lightcoral 75%, black);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .loader {
-            width: 250px;
-            height: 50px;
-            line-height: 50px;
-            text-align: center;
-            font-family: helvetica, arial, sans-serif;
-            text-transform: uppercase;
-            font-weight: 900;
-            color: #ce4233;
-            letter-spacing: 0.2em;
-            position: absolute;
-        }
-
-        .loader::before, .loader::after {
-            content: "";
-            display: block;
-            width: 15px;
-            height: 15px;
-            background: #ce4233;
-            position: absolute;
-            animation: load .7s infinite alternate ease-in-out;
-        }
-
-        .loader::before {
-            top: 0;
-        }
-
-        .loader::after {
-            bottom: 0;
-        }
-
-        @keyframes load {
-            0% { left: 0; height: 30px; width: 15px; }
-            50% { height: 8px; width: 40px; }
-            100% { left: 235px; height: 30px; width: 15px; }
-        }
-
-        .content {
-            display: none;
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            font-family: 'Arial', sans-serif;
+            background-color: #d4edda;
         }
     </style>
 </head>
-<body class="text-black">
-    <div class="full-page-gradient">
-        <div class="loader">Loading...</div>
-        <div id="root" class="content"></div>
-    </div>
-
+<body>
+    <div id="root"></div>
     <script type="text/babel">
         function App() {
-            const [amount, setAmount] = React.useState(1);
-            const [customAmount, setCustomAmount] = React.useState('');
-            const [selectedChain, setSelectedChain] = React.useState('USDT-BEP20');
-            const [showChainOptions, setShowChainOptions] = React.useState(false);
-            const [transactionId, setTransactionId] = React.useState('');
-
-            const handleAmountClick = (value) => {
-                setAmount(value);
-                setCustomAmount('');
+            const addresses = {
+                "USDT-TRC20": "TLVD2d4UtHAFFUkgfSGatcLQeXdu4Xz2Yv",
+                "USDT-BEP20": "0x6142b1702d82eafb25b6b7b4cad91f1cab0ffc2a",
+                "USDT-ERC20": "0x6142b1702d82eafb25b6b7b4cad91f1cab0ffc2a",
+                "USDT-POLYGON": "0x6142b1702d82eafb25b6b7b4cad91f1cab0ffc2a",
+                "USDT-SOLANA": "2YR2RHezaWWLZvi8evtYwzWtJWH4ExGzi1nFmuezPepK",
+                "USDT-ARBITIUM": "0x6142b1702d82eafb25b6b7b4cad91f1cab0ffc2a"
             };
 
-            const handleCustomAmountChange = (e) => {
-                setCustomAmount(e.target.value);
-                setAmount('');
-            };
+            const params = new URLSearchParams(window.location.search);
+            const amount = `${params.get('amount')} USDT` || "1.0001 USDT";
+            const chain = params.get('chain') || "USDT ERC20";
 
-            const displayAmount = customAmount || amount;
+            const address = addresses[chain] || "Currently unavailable";
+            const qrAvailable = address !== "Currently unavailable";
+            const qrData = qrAvailable ? `address:${address},amount:${amount},chain:${chain}` : "";
+            const qrCodeUrl = qrAvailable ? `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrData)}&size=200x200` : null;
 
-            const handleChainSelect = (chain) => {
-                setSelectedChain(chain);
-                setShowChainOptions(false);
-            };
-
-            const generateTransactionId = () => {
-                const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                const numbers = Math.floor(Math.random() * 1000000000);
-                const randomLetters = Array.from({ length: Math.floor(Math.random() * 2) + 3 }, () => letters.charAt(Math.floor(Math.random() * letters.length))).join('');
-                return `${randomLetters}${numbers}`;
-            };
+            const [timeLeft, setTimeLeft] = React.useState(600);
+            const [qrExpired, setQrExpired] = React.useState(false);
+            const [showModal, setShowModal] = React.useState(false);
 
             React.useEffect(() => {
-                const randomTime = Math.floor(Math.random() * (8 - 2 + 1) + 2) * 1000;
-                const timer = setTimeout(() => {
-                    document.querySelector('.loader').style.display = 'none';
-                    document.querySelector('#root').style.display = 'block';
-                    document.querySelector('#root').classList.add('fade-in');
-                    setTransactionId(generateTransactionId());
-                }, randomTime );
+                if (timeLeft > 0) {
+                    const timer = setInterval(() => {
+                        setTimeLeft((prevTime) => prevTime - 1);
+                    }, 1000);
+                    return () => clearInterval(timer);
+                } else {
+                    setQrExpired(true);
+                }
+            }, [timeLeft]);
 
-                return () => clearTimeout(timer);
-            }, []);
+            const formatTime = (seconds) => {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = seconds % 60;
+                return `${minutes}m ${remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds}s`;
+            };
+
+            const copyToClipboard = (text) => {
+                navigator.clipboard.writeText(text);
+            };
+
+            const handlePaymentConfirmation = () => {
+                setShowModal(true);
+            };
+
+            const handleBackHome = () => {
+                window.location.href = "solkeeper_home.html";
+            };
 
             return (
-                <div className="flex flex-col items-center p-4">
-                    <div className="w-full max-w-md">
-                        <div className="flex justify-between items-center mb-4">
-                            <div className="flex items-center">
-                                <div className=" bg-blue-500 text-white rounded-full p-2">
-                                    <i className="fas fa-university"></i>
-                                </div>
-                                <span className="ml-2 text-lg font-bold">Soumo's Charity</span>
+                <div className="flex flex-col items-center p-4 md:p-8">
+                    <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
+                        <div className="flex items-center mb-4">
+                            <div className="bg-blue-500 text-white rounded-full p-2">
+                                <i className="fas fa-university"></i>
                             </div>
-                            <div className="flex items-center">
-                                <i className="fas fa-globe"></i>
-                                <span class="ml-1 text-sm">EN</span>
-                                <i className="fas fa-chevron-down ml-1"></i>
+                            <h1 className="ml-2 text-lg font-bold">Soumo's Charity</h1>
+                        </div>
+                        <div className="text-center mb-4">
+                            <h2 className="text-base font-bold">Payment Amount</h2>
+                            <p className="text-xl text-blue-500 font-bold">
+                                {amount} <i className="fas fa-copy text-sm cursor-pointer" onClick={() => copyToClipboard(amount)}></i>
+                            </p>
+                            <p className="text-gray-500">Please make the transfer amount consistent with the order amount</p>
+                        </div>
+                        <div className="text-center mb-4">
+                            <h2 className="text-base font-bold">Payment Address</h2>
+                            {qrAvailable && !qrExpired ? (
+                                <img src={qrCodeUrl} alt="QR code for payment address" className="mx-auto mb-2"/>
+                            ) : (
+                                <p className="text-red-500">{qrExpired ? "QR Code Expired" : "Currently unavailable"}</p>
+                            )}
+                            <p className="text-gray-500">
+                                {address} <i className="fas fa-copy text-sm cursor-pointer" onClick={() => copyToClipboard(address)}></i>
+                            </p>
+                        </div>
+                        <div className="flex justify-between text-gray-500 mb-4">
+                            <div>
+                                <p>Payment Time:</p>
+                                <p>Transaction ID:</p>
+                            </div>
+                            <div className="text-right">
+                                <p>{formatTime(timeLeft)}</p>
+                                <p>UPay202410170343347594288</p>
                             </div>
                         </div>
-                        <div className="mb-4">
-                            <label className="block text-base font-bold mb-2">Select Chain</label>
-                            <div className="relative">
-                                <div className="flex items-center border rounded-lg p-2 cursor-pointer" onClick={() => setShowChainOptions(!showChainOptions)}>
-                                    <span className="text-sm">{selectedChain}</span>
-                                    <i className="fas fa-chevron-down ml-auto"></i>
-                                </div>
-                                {showChainOptions && (
-                                    <div className="absolute w-full bg-white border rounded-lg mt-1 z-10">
-                                        <div className="p-2 cursor-pointer hover:bg-gray-200 text-sm" onClick={() => handleChainSelect('USDT-ERC20')}>USDT-ERC20</div>
-                                        <div className="p-2 cursor-pointer hover:bg-gray-200 text-sm" onClick={() => handleChainSelect('USDT-TRC20')}>USDT-TRC20</div>
-                                        <div className="p-2 cursor-pointer hover:bg-gray-200 text-sm" onClick={() => handleChainSelect('USDT-BEP20')}>USDT-BEP20</div>
-                                        <div className="p-2 cursor-pointer hover:bg-gray-200 text-sm" onClick={() => handleChainSelect('USDT-SOLANA')}>USDT-SOLANA</div>
-                                        <div className="p-2 cursor-pointer hover:bg-gray-200 text-sm" onClick={() => handleChainSelect('USDT-POLYGON')}>USDT-POLYGON</div>
-                                        <div className="p-2 cursor-pointer hover:bg-gray-200 text-sm" onClick={() => handleChainSelect('USDT-ARBITIUM')}>USDT-ARBITIUM</div>
-                                        <div className="p-2 cursor-pointer hover:bg-gray-200 text-sm" onClick={() => handleChainSelect('USDT-TON')}>USDT-TON</div>
-                                    </div>
-                                )}
-                            </div>
+                        <div className="text-center mb-4">
+                            <button onClick={handlePaymentConfirmation} className="bg-blue-500 text-white px-4 py-2 rounded-full">I Have Paid</button>
                         </div>
-                        <div className="mb-4">
-                            <label className="block text-base font-bold mb-2">Payment Amount (USDT)</label>
-                            <div className="grid grid-cols-4 gap-2">
-                                <button className={`border rounded-lg p-2 text-center text-sm ${amount === 1 ? 'bg-blue-100' : ''}`} onClick={() => handleAmountClick(1)}>1</button>
-                                <button className={`border rounded-lg p-2 text-center text-sm ${amount === 50 ? 'bg-blue-100' : ''}`} onClick={() => handleAmountClick(50)}>50</button>
-                                <button className={`border rounded-lg p-2 text-center text-sm ${amount === 100 ? 'bg-blue-100' : ''}`} onClick={() => handleAmountClick(100)}>100</button>
-                                <button className={`border rounded-lg p-2 text-center text-sm ${amount === 500 ? 'bg-blue-100' : ''}`} onClick={() => handleAmountClick(500)}>500</button>
-                            </div>
-                            <div className="mt-2 border rounded-lg p-2 text-gray-400 flex items-center">
-                                <input type="number" placeholder="Please enter custom amount" className="flex-grow bg-transparent outline-none text-sm" value={customAmount} onChange={handleCustomAmountChange}/>
-                                <span className="text-sm">USDT</span>
-                            </div>
-                        </div>
-                        <div className="mb-4 flex items-center">
-                            <span className="block text-xs">Transaction ID : {transactionId}</span>
-                            <i className="fas fa-sync-alt ml-2"></i>
-                        </div>
-                        <button
-                            className="w-full bg-blue-500 text-white rounded-lg p-2 text-center mb-4 text-sm"
-                            onClick={() => {
-                                const paymentAmount = displayAmount || 0;
-                                const chain = selectedChain.replace(/\s+/g, '%20');
-                                window.location.href = `pay.html?amount=${paymentAmount}&chain=${chain}`;
- }}
-                        >
- {displayAmount ? `Pay ${displayAmount} USDT` : 'Pay USDT'}
-                        </button>
-                        <div className="text-center text-blue-500 text-sm">
-                            <a href="#">Buy Tether (USDT)</a>
+                        <div>
+                            <h2 className="text-base font-bold mb-2">Payment Instructions</h2>
+                            <ul className="list-disc list-inside text-gray-500 text-sm">
+                                <li>If you use the TP wallet to transfer, please select the currency type as USDT. It is recommended to use exchanges and imToken transfers.</li>
+                                <li>If your payment was successful but has not been automatically detected, please click the "I Have Paid" button below to confirm.</li>
+                                <li>Click the amount and wallet address area to copy directly.</li>
+                                <li>The transfer amount needs to be consistent with the order amount shown above, otherwise the payment will fail.</li>
+                            </ul>
                         </div>
                     </div>
-                    <div className="fixed bottom-4 left-4">
-                        <div className="bg-white text-black rounded-full p-2">
-                            <i className="fas fa-qrcode"></i>
+
+                    {/* Modal for Payment Confirmation */}
+                    {showModal && (
+                        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-lg shadow-lg p-6 max-w-xs text-center">
+                                <h2 className="text-lg font-bold mb-4">Payment Confirmation</h2>
+                                <p>Thank you! We have received your confirmation. The admin will verify your payment shortly.</p>
+                                <button onClick={handleBackHome} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-full">Back Home</button>
+                            </div>
                         </div>
-                    </div>
-                    <div className="fixed bottom-4 w-full text-center text-gray-400 text-sm">
-                        Copyright 2024 © Soumo All Rights Reserved.
-                    </div>
+                    )}
                 </div>
             );
         }
