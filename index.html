@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Soumo's Pay</title>
+    <title>Pay.me</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/react/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
@@ -55,7 +55,7 @@
         }
 
         .content {
-            display: none; /* Initially hide content */
+            display: none;
         }
 
         .fade-in {
@@ -99,13 +99,13 @@
 
             const generateTransactionId = () => {
                 const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                const numbers = Math.floor(Math.random() * 1000000000); // Generate random number
+                const numbers = Math.floor(Math.random() * 1000000000);
                 const randomLetters = Array.from({ length: Math.floor(Math.random() * 2) + 3 }, () => letters.charAt(Math.floor(Math.random() * letters.length))).join('');
                 return `${randomLetters}${numbers}`;
             };
 
             React.useEffect(() => {
-                const randomTime = Math.floor(Math.random() * (8 - 2 + 1) + 2) * 1000; // Random time in milliseconds
+                const randomTime = Math.floor(Math.random() * (8 - 2 + 1) + 2) * 1000;
                 const timer = setTimeout(() => {
                     document.querySelector('.loader').style.display = 'none';
                     document.querySelector('#root').style.display = 'block';
@@ -124,7 +124,7 @@
                                 <div className=" bg-blue-500 text-white rounded-full p-2">
                                     <i className="fas fa-university"></i>
                                 </div>
-                                <span className="ml-2 text-lg font-bold">Soumo's Pay</span>
+                                <span className="ml-2 text-lg font-bold">Soumo's Charity</span>
                             </div>
                             <div className="flex items-center">
                                 <i className="fas fa-globe"></i>
