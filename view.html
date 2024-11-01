@@ -1,0 +1,94 @@
+<html>
+<head>
+    <title>Memecoin $MTRX</title>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap');
+        body {
+            font-family: sans-serif;
+        }
+        .title-font {
+            font-family: 'Anton', sans-serif;
+        }
+        .dollar-sign {
+            font-size: 1.2em;
+        }
+        .ton-font {
+            font-family: 'Roboto', sans-serif;
+        }
+        .content-font {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem; /* Slightly smaller font size */
+        }
+        .copy-icon {
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div id="root"></div>
+    <script type="text/babel">
+        const App = () => {
+            const copyToClipboard = () => {
+                const address = "EQBTcytZjdZwFLj6TO7CeGvn4aMmqXvbX-nODiApbd011gT3";
+                navigator.clipboard.writeText(address).then(() => {
+                    alert('Contract address copied to clipboard');
+                });
+            };
+
+            return (
+                <div className="flex flex-col items-center p-4">
+                    <header className="w-full flex justify-between items-center p-4">
+                        <div className="flex items-center">
+                            <span className="icon-[token-branded--ton] w-10 h-10"></span>
+                            <span className="ml-2 text-xl font-bold text-blue-600 ton-font">TON</span>
+                        </div>
+                        <div className="flex items-center space-x-4">
+                            <button className="bg-gray-100 text-black font-bold py-2 px-4 rounded-full ton-font">BUY TOKEN</button>
+                            <button className="bg-gray-100 text-black font-bold py-2 px-4 rounded-full">
+                                <i className="fas fa-bars"></i>
+                            </button>
+                        </div>
+                    </header>
+                    <main className="flex flex-col items-center mt-8">
+                        <img src="https://ibb.co/sPdsXb5/duck.png" alt="Duck holding a trophy" className="w-52 h-52"/>
+                        <h1 className="text-4xl title-font mt-4">MEMECOIN <span className="dollar-sign">$</span>DUCK</h1>
+                        <p className="text-center mt-2 content-font">
+                            The Duck is the official mascot of Telegram. DuckCoin is a memecoin launched on the TON blockchain.
+                        </p>
+                        <p className="text-center text-gray-500 mt-1 text-sm">Since the 2024 year</p>
+                        <div className="mt-4 text-center">
+                            <p className="text-gray-500 text-sm flex items-center justify-center">
+                                Contract Address 
+                                <button onClick={copyToClipboard} className="ml-2">
+                                    <i className="far fa-copy copy-icon"></i>
+                                </button>
+                            </p>
+                            <p className="text-gray-700 text-xs">EQBTcytZjdZwFLj6TO7CeGvn4aMmqXvbX-nODiApbd011gT3</p>
+                        </div>
+                        <div className="mt-4 text-center">
+                            <p className="text-gray-500 text-sm">The Open Network for $DUCK</p>
+                            <p className="text-gray-700 text-xs">Toncoin is TON's native cryptocurrency</p>
+                        </div>
+                        <div className="flex space-x-4 mt-6">
+                            <button className="bg-white border border-gray-300 text-black font-bold py-2 px-4 rounded-full flex items-center ton-font">
+                                <i className="fas fa-gem text-blue-500 mr-2"></i> TONVIEWER
+                            </button>
+                            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full ton-font">BUY TOKEN</button>
+                        </div>
+                    </main>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
