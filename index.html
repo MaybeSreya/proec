@@ -18,8 +18,8 @@
             margin: 0;
         }
         #app-container {
-            width: 375px; /* Fixed width for mobile appearance */
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Optional shadow for better visual */
+            width: 375px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
             border-radius: 12px;
             overflow: hidden;
         }
@@ -33,30 +33,27 @@
         function App() {
             return (
                 <div className="flex flex-col items-center min-h-screen bg-[#fefaf3]">
-                    <header className="w-full flex justify-between items-center p-4 border-b">
+                    <header className="w-full flex justify-between items-center p-4 border-b bg-[#fefaf3]">
                         <div className="flex items-center">
-                            <span className="iconify text-xl mr-2" data-icon="token-branded:ait"></span>
-                            <h1 className="text-xl font-semibold flex items-center">
+                            <span className="iconify text-2xl text-blue-600 mr-2" data-icon="token-branded:ait"></span>
+                            <h1 className="text-lg font-semibold flex items-center text-gray-800">
                                 Scroll Airdrop Claim
-                                <span className="iconify text-blue-500 ml-2" data-icon="iconoir:verified-badge"></span>
+                                <span className="iconify text-blue-500 ml-2 text-xl" data-icon="iconoir:verified-badge"></span>
                             </h1>
                         </div>
-                        <i className="fas fa-wallet text-xl"></i>
+                        <i className="fas fa-wallet text-xl text-gray-800"></i>
                     </header>
-                    <main className="flex flex-col items-center mt-6 px-4 w-full">
+                    <main className="flex flex-col items-center mt-4 px-4 w-full">
                         <img src="https://i.ibb.co/8DNK3dk/scroll-welcome.png" alt="Illustration of people in an ancient architectural setting" className="w-full max-w-xs mb-6"/>
-                        <div className="bg-white p-4 rounded-t-lg shadow-md text-center w-full">
-                            <h2 className="text-xl font-bold mb-2">Welcome to Scroll Airdrop Claim</h2>
+                        <div className="bg-white p-4 rounded-lg shadow-md text-center w-full">
+                            <h2 className="text-xl font-bold mb-2 text-gray-800">Welcome to Scroll Airdrop Claim</h2>
                             <p className="text-gray-700 mb-4 text-sm">
                                 Thank you for being part of Scroll's journey so far! We've come a long way and are now excited to embark on the next phase of this journey. This airdrop aims to distribute ownership of the Scroll network to stakeholders across the community. Join us as we decentralize Scroll!
                             </p>
-                            <button className="bg-red-500 text-white py-2 px-4 rounded-full text-lg font-semibold w-full">Connect wallet</button>
+                            <button className="bg-red-500 text-white py-2 px-6 rounded-full text-lg font-semibold w-full mb-2">Connect wallet</button>
                         </div>
                         <span className="mt-4 text-gray-700 text-sm">1B SCR total supply</span>
                     </main>
-                    <footer className="w-full flex justify-between items-center p-4 mt-6 border-t text-sm">
-                        <span>FAQ <i className="fab fa-discord"></i></span>
-                    </footer>
                 </div>
             );
         }
