@@ -1,11 +1,13 @@
 <html>
  <head>
-  <script src="https://cdn.tailwindcss.com">
-  </script>
-  <script src="https://registry.npmmirror.com/vue/3.3.11/files/dist/vue.global.js">
-  </script>
+  <!-- Prevent zooming -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://registry.npmmirror.com/vue/3.3.11/files/dist/vue.global.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&amp;display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  
   <style>
    body {
       font-family: 'Fredoka One', cursive;
@@ -33,15 +35,13 @@
    <div class="w-full max-w-4xl p-20 bg-gray-800 rounded-lg shadow-lg mx-4">
     <div class="mb-8">
      <div class="flex justify-center mt-4">
-      <div class="cib--samsung-pay">
-      </div>
+      <div class="cib--samsung-pay"></div>
      </div>
     </div>
     <div>
      <h2 class="text-2xl mb-4 text-white flex items-center">
       Payment Details
-      <span class="material-symbols-light--verified-outline ml-2">
-      </span>
+      <span class="material-symbols-light--verified-outline ml-2"></span>
      </h2>
      <div class="mb-6">
       <input class="w-full p-4 border rounded-lg bg-white shadow-sm" placeholder="Enter your UPI Address *" type="text" required/>
