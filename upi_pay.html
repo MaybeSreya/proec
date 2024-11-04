@@ -18,11 +18,19 @@
       background-size: 100% 100%;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23ffffff' d='M31.969 14.271c-.177-5.104-1.516-9.214-4.542-11.458S19.854-.208 14.141.063c-2.599.125-4.938.464-6.839 1.224c-1.958.786-3.474 1.896-4.583 3.438C.49 7.824-.198 12.506.047 17.897c.234 5.12 1.557 9.172 4.62 11.38c3.047 2.198 7.995 2.896 13.214 2.672c5.063-.214 9.177-1.552 11.38-4.62c2.198-3.063 2.896-7.578 2.708-13.057zM8.802 19.693h-.661v-1.417h.661c1.26 0 2.182-.974 2.182-2.182a2.18 2.18 0 0 0-2.182-2.182h-2.13a.174.174 0 0 0-.167.125v7.734H5.13v-7.734c0-.849.693-1.542 1.542-1.542h2.13c1.99 0 3.635 1.615 3.635 3.599c0 1.99-1.536 3.599-3.635 3.599m11.604 0h-1.391V15.99c-.031-1.047-1.141-2.089-2.323-2.089c-1.328 0-2.302 1.135-2.302 2.193c0 1.505 1.057 2.193 2.302 2.193h.495v1.406h-.495c-2.047 0-3.714-1.313-3.714-3.599c0-1.859 1.667-3.599 3.714-3.599c1.854 0 3.656 1.557 3.714 3.495zm1.766-6.959l1.813 3.719l-.786 1.599l-2.599-5.318zm1.682 9.292h-1.578l4.568-9.292h1.578z'/%3E%3C/svg%3E");
     }
+    .material-symbols-light--verified-outline {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ADD8E6' d='m9.023 21.23l-1.67-2.814l-3.176-.685l.312-3.277L2.346 12L4.49 9.546L4.177 6.27l3.177-.685L9.023 2.77L12 4.027l2.977-1.258l1.67 2.816l3.176.684l-.312 3.277L21.655 12l-2.142 2.454l.311 3.277l-3.177.684l-1.669 2.816L12 19.973zm.427-1.28L12 18.889l2.562 1.061L16 17.55l2.75-.611l-.25-2.839l1.85-2.1l-1.85-2.111l.25-2.839l-2.75-.6l-1.45-2.4L12 5.112L9.439 4.05L8 6.45l-2.75.6l.25 2.839L3.65 12l1.85 2.1l-.25 2.85l2.75.6zm1.5-5.092L15.908 9.9l-.708-.72l-4.25 4.25l-2.15-2.138l-.708.708z'/%3E%3C/svg%3E");
+    }
   </style>
  </head>
  <body class="bg-gray-900">
   <div class="flex flex-col items-center justify-center min-h-screen p-4" id="app">
-   <div class="w-full max-w-md p-4 bg-gray-800 rounded-lg shadow-lg">
+   <div class="w-full max-w-4xl p-16 bg-gray-800 rounded-lg shadow-lg mx-4">
     <div class="mb-4">
      <div class="flex justify-center mt-2">
       <div class="cib--samsung-pay">
@@ -30,8 +38,10 @@
      </div>
     </div>
     <div>
-     <h2 class="text-lg mb-2 text-white">
+     <h2 class="text-lg mb-2 text-white flex items-center">
       Payment Details
+      <span class="material-symbols-light--verified-outline ml-2">
+      </span>
      </h2>
      <div class="mb-4">
       <input class="w-full p-3 border rounded-lg bg-white shadow-sm" placeholder="Enter your UPI Address *" type="text" required/>
