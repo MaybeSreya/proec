@@ -1,13 +1,10 @@
 <html>
  <head>
-  <!-- Prevent zooming -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://registry.npmmirror.com/vue/3.3.11/files/dist/vue.global.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&amp;display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-  
   <style>
    body {
       font-family: 'Fredoka One', cursive;
@@ -28,46 +25,32 @@
       background-size: 100% 100%;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ADD8E6' d='m9.023 21.23l-1.67-2.814l-3.176-.685l.312-3.277L2.346 12L4.49 9.546L4.177 6.27l3.177-.685L9.023 2.77L12 4.027l2.977-1.258l1.67 2.816l3.176.684l-.312 3.277L21.655 12l-2.142 2.454l.311 3.277l-3.177.684l-1.669 2.816L12 19.973zm.427-1.28L12 18.889l2.562 1.061L16 17.55l2.75-.611l-.25-2.839l1.85-2.1l-1.85-2.111l.25-2.839l-2.75-.6l-1.45-2.4L12 5.112L9.439 4.05L8 6.45l-2.75.6l.25 2.839L3.65 12l1.85 2.1l-.25 2.85l2.75.6zm1.5-5.092L15.908 9.9l-.708-.72l-4.25 4.25l-2.15-2.138l-.708.708z'/%3E%3C/svg%3E");
     }
-    /* Adjustments for mobile */
-    @media (max-width: 768px) {
-      h2 {
-        font-size: 1.5rem;
-      }
-      .cib--samsung-pay {
-        width: 5em;
-        height: 5em;
-      }
-      input, button {
-        font-size: 1.1rem;
-        padding: 1.25rem;
-      }
-    }
   </style>
  </head>
  <body class="bg-gray-900">
-  <div class="flex flex-col items-center justify-center min-h-screen p-8" id="app">
-   <div class="w-full max-w-4xl p-20 bg-gray-800 rounded-lg shadow-lg mx-4">
-    <div class="mb-8">
-     <div class="flex justify-center mt-4">
+  <div class="flex flex-col items-center justify-center min-h-screen p-4" id="app">
+   <div class="w-full max-w-4xl p-16 bg-gray-800 rounded-lg shadow-lg mx-4">
+    <div class="mb-4">
+     <div class="flex justify-center mt-2">
       <div class="cib--samsung-pay"></div>
      </div>
     </div>
     <div>
-     <h2 class="text-2xl mb-4 text-white flex items-center">
+     <h2 class="text-lg mb-2 text-white flex items-center">
       Payment Details
       <span class="material-symbols-light--verified-outline ml-2"></span>
      </h2>
-     <div class="mb-6">
-      <input class="w-full p-4 border rounded-lg bg-white shadow-sm" placeholder="Enter your UPI Address *" type="text" required/>
+     <div class="mb-4">
+      <input id="upiId" class="w-full p-3 border rounded-lg bg-white shadow-sm" placeholder="Enter your UPI Address *" type="text" required/>
      </div>
-     <div class="mb-6">
-      <input class="w-full p-4 border rounded-lg bg-white shadow-sm" placeholder="Enter Amount (Optional)" type="text"/>
+     <div class="mb-4">
+      <input id="amount" class="w-full p-3 border rounded-lg bg-white shadow-sm" placeholder="Enter Amount (Optional)" type="text"/>
      </div>
-     <div class="mb-6">
-      <input class="w-full p-4 border rounded-lg bg-white shadow-sm" placeholder="Enter your name *" type="text" required/>
+     <div class="mb-4">
+      <input id="name" class="w-full p-3 border rounded-lg bg-white shadow-sm" placeholder="Enter your name *" type="text" required/>
      </div>
      <div class="flex justify-center">
-      <button class="bg-blue-600 text-white py-3 px-8 rounded-full shadow-md">
+      <button class="bg-blue-600 text-white py-2 px-6 rounded-full shadow-md">
        Save Details
       </button>
      </div>
@@ -75,8 +58,24 @@
    </div>
   </div>
   <script>
+   function getQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+         upiId: params.get('upiId') || '',
+         amount: params.get('amount') || '',
+         name: params.get('name') ? decodeURIComponent(params.get('name').replace(/\+/g, ' ')) : ''
+      };
+   }
+
    const { createApp } = Vue;
-    createApp({}).mount('#app');
+   createApp({
+      mounted() {
+         const params = getQueryParams();
+         document.getElementById('upiId').value = params.upiId;
+         document.getElementById('amount').value = params.amount;
+         document.getElementById('name').value = params.name;
+      }
+   }).mount('#app');
   </script>
  </body>
 </html>
