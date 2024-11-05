@@ -1,0 +1,175 @@
+<html>
+<head>
+  <title>UPI Pay.me by Soumo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://registry.npmmirror.com/vue/3.3.11/files/dist/vue.global.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&amp;display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <style>
+    /* Custom CSS for SVG Background */
+    #bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    body {
+      font-family: 'Fredoka One', cursive;
+      overflow: hidden;
+    }
+    .cib--samsung-pay, .material-symbols-light--verified-outline {
+      display: inline-block;
+      width: 6em;
+      height: 6em;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+    /* Tailwind Overrides */
+    .bg-color-gradient {
+      background: radial-gradient(ellipse at center, #feda3e 0%, #7a5f0e 100%);
+    }
+  </style>
+</head>
+<body class="bg-gray-900">
+  <!-- Background SVG container -->
+  <div id="bg"></div>
+
+  <!-- Main App Content -->
+  <div class="flex flex-col items-center justify-center min-h-screen p-4" id="app">
+    <div class="w-full max-w-4xl p-16 bg-gray-800 rounded-lg shadow-lg mx-4">
+      <div class="mb-4">
+        <div class="flex justify-center mt-2">
+          <div class="cib--samsung-pay"></div>
+        </div>
+      </div>
+      <div>
+        <h2 class="text-lg mb-2 text-white flex items-center">
+          Payment Details
+          <span class="material-symbols-light--verified-outline ml-2"></span>
+        </h2>
+        <div class="mb-4">
+          <input id="upiId" class="w-full p-3 border rounded-lg bg-white shadow-sm" placeholder="Enter your UPI Address *" type="text" required/>
+        </div>
+        <div class="mb-4">
+          <input id="amount" class="w-full p-3 border rounded-lg bg-white shadow-sm" placeholder="Enter Amount (Optional)" type="text"/>
+        </div>
+        <div class="mb-4">
+          <input id="name" class="w-full p-3 border rounded-lg bg-white shadow-sm" placeholder="Enter your name *" type="text" required/>
+        </div>
+        <div class="flex justify-center">
+          <button class="bg-blue-600 text-white py-2 px-6 rounded-full shadow-md">
+            Save Details
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Animation Script -->
+  <script>
+    var refreshDuration = 10000;
+    var refreshTimeout;
+    var numPointsX;
+    var numPointsY;
+    var unitWidth;
+    var unitHeight;
+    var points;
+
+    function onLoad() {
+      var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('width', window.innerWidth);
+      svg.setAttribute('height', window.innerHeight);
+      document.querySelector('#bg').appendChild(svg);
+
+      var unitSize = (window.innerWidth + window.innerHeight) / 20;
+      numPointsX = Math.ceil(window.innerWidth / unitSize) + 1;
+      numPointsY = Math.ceil(window.innerHeight / unitSize) + 1;
+      unitWidth = Math.ceil(window.innerWidth / (numPointsX - 1));
+      unitHeight = Math.ceil(window.innerHeight / (numPointsY - 1));
+      points = [];
+
+      for (var y = 0; y < numPointsY; y++) {
+        for (var x = 0; x < numPointsX; x++) {
+          points.push({
+            x: unitWidth * x,
+            y: unitHeight * y,
+            originX: unitWidth * x,
+            originY: unitHeight * y
+          });
+        }
+      }
+
+      randomize();
+
+      for (var i = 0; i < points.length; i++) {
+        if (points[i].originX != unitWidth * (numPointsX - 1) && points[i].originY != unitHeight * (numPointsY - 1)) {
+          var topLeftX = points[i].x;
+          var topLeftY = points[i].y;
+          var topRightX = points[i + 1].x;
+          var topRightY = points[i + 1].y;
+          var bottomLeftX = points[i + numPointsX].x;
+          var bottomLeftY = points[i + numPointsX].y;
+          var bottomRightX = points[i + numPointsX + 1].x;
+          var bottomRightY = points[i + numPointsX + 1].y;
+
+          var rando = Math.floor(Math.random() * 2);
+
+          for (var n = 0; n < 2; n++) {
+            var polygon = document.createElementNS(svg.namespaceURI, 'polygon');
+            if (rando == 0) {
+              if (n == 0) polygon.setAttribute('points', `${topLeftX},${topLeftY} ${bottomLeftX},${bottomLeftY} ${bottomRightX},${bottomRightY}`);
+              else polygon.setAttribute('points', `${topLeftX},${topLeftY} ${topRightX},${topRightY} ${bottomRightX},${bottomRightY}`);
+            } else {
+              if (n == 0) polygon.setAttribute('points', `${topLeftX},${topLeftY} ${bottomLeftX},${bottomLeftY} ${topRightX},${topRightY}`);
+              else polygon.setAttribute('points', `${bottomLeftX},${bottomLeftY} ${topRightX},${topRightY} ${bottomRightX},${bottomRightY}`);
+            }
+            polygon.setAttribute('fill', `rgba(0,0,0,${Math.random() / 3})`);
+            var animate = document.createElementNS(svg.namespaceURI, 'animate');
+            animate.setAttribute('fill', 'freeze');
+            animate.setAttribute('attributeName', 'points');
+            animate.setAttribute('dur', refreshDuration + 'ms');
+            animate.setAttribute('calcMode', 'linear');
+            polygon.appendChild(animate);
+            svg.appendChild(polygon);
+          }
+        }
+      }
+
+      refresh();
+    }
+
+    function randomize() {
+      for (var i = 0; i < points.length; i++) {
+        if (points[i].originX != 0 && points[i].originX != unitWidth * (numPointsX - 1))
+          points[i].x = points[i].originX + Math.random() * unitWidth - unitWidth / 2;
+        if (points[i].originY != 0 && points[i].originY != unitHeight * (numPointsY - 1))
+          points[i].y = points[i].originY + Math.random() * unitHeight - unitHeight / 2;
+      }
+    }
+
+    function refresh() {
+      randomize();
+      for (var i = 0; i < document.querySelector('#bg svg').childNodes.length; i++) {
+        var polygon = document.querySelector('#bg svg').childNodes[i];
+        var animate = polygon.childNodes[0];
+        animate.setAttribute('from', animate.getAttribute('to') || '');
+        animate.setAttribute('to', `${points[polygon.point1].x},${points[polygon.point1].y} ${points[polygon.point2].x},${points[polygon.point2].y} ${points[polygon.point3].x},${points[polygon.point3].y}`);
+        animate.beginElement();
+      }
+      refreshTimeout = setTimeout(refresh, refreshDuration);
+    }
+
+    function onResize() {
+      document.querySelector('#bg svg').remove();
+      clearTimeout(refreshTimeout);
+      onLoad();
+    }
+
+    window.onload = onLoad;
+    window.onresize = onResize;
+  </script>
+</body>
+</html>
