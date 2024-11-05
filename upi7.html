@@ -1,0 +1,117 @@
+<html>
+ <head>
+  <title>UPI Pay.me by Soumo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://registry.npmmirror.com/vue/3.3.11/files/dist/vue.global.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&amp;display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      font-family: Poppins;
+      color: #f0f0f0;
+    }
+    body {
+      min-height: 100vh;
+      background: #0b0d15;
+      color: #a2a5b3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    h2 {
+      color: white;
+    }
+    .card {
+      padding: 2em;
+      width: 100%;
+      max-width: 500px;
+      background: #1c1f2b;
+      text-align: center;
+      border-radius: 10px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    @property --angle {
+      syntax: "<angle>";
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    .card::after, .card::before {
+      content: '';
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-image: conic-gradient(from var(--angle), #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+      padding: 4px;
+      border-radius: 10px;
+      animation: spin 3s linear infinite;
+    }
+
+    .card::before {
+      filter: blur(1.5rem);
+      opacity: 0.5;
+    }
+
+    @keyframes spin {
+      from {
+        --angle: 0deg;
+      }
+      to {
+        --angle: 360deg;
+      }
+    }
+  </style>
+ </head>
+ <body>
+  <div class="card">
+    <div class="flex flex-col items-center justify-center">
+      <div class="flex justify-center mt-2 mb-4">
+        <div class="cib--samsung-pay"></div>
+      </div>
+      <h2 class="text-lg mb-2 flex items-center">
+        Payment Details
+        <span class="material-symbols-light--verified-outline ml-2"></span>
+      </h2>
+      <input id="upiId" class="w-full p-3 mb-4 border rounded-lg bg-white shadow-sm" placeholder="Enter your UPI Address *" type="text" required/>
+      <input id="amount" class="w-full p-3 mb-4 border rounded-lg bg-white shadow-sm" placeholder="Enter Amount (Optional)" type="text"/>
+      <input id="name" class="w-full p-3 mb-4 border rounded-lg bg-white shadow-sm" placeholder="Enter your name *" type="text" required/>
+      <button class="bg-blue-600 text-white py-2 px-6 rounded-full shadow-md">
+        Save Details
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function getQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+         upiId: params.get('upiId') || '',
+         amount: params.get('amount') || '',
+         name: params.get('name') ? decodeURIComponent(params.get('name').replace(/\+/g, ' ')) : ''
+      };
+    }
+
+    const { createApp } = Vue;
+    createApp({
+      mounted() {
+         const params = getQueryParams();
+         document.getElementById('upiId').value = params.upiId;
+         document.getElementById('amount').value = params.amount;
+         document.getElementById('name').value = params.name;
+      }
+    }).mount('.card');
+  </script>
+ </body>
+</html>
