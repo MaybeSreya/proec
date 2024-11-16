@@ -25,9 +25,9 @@
                     setPasscode(newPasscode);
                     if (newPasscode.length === 6) {
                         if (newPasscode === correctPassword) {
-                            setMessage("Access processed !");
+                            setMessage("Access processed!");
                         } else {
-                            setMessage("Access denied !");
+                            setMessage("Access denied!");
                         }
                         setShowMessage(true);
                         setTimeout(() => {
@@ -72,8 +72,8 @@
                         ))}
                     </div>
                     {showMessage && (
-                        <div className="absolute top-0 left-0 right-0 flex items-center justify-center mt-8">
-                            <div className="bg-gray-800 text-white p-6 rounded-lg relative w-80">
+                        <div className="absolute top-4 left-0 right-0 flex items-center justify-center">
+                            <div className="bg-gray-800 text-white p-6 rounded-lg relative w-80 flex items-center justify-center">
                                 <span>{message}</span>
                                 <div className="absolute top-2 right-2 w-6 h-6 bg-gray-600 rounded-full flex items-center justify-center cursor-pointer" onClick={handleCloseMessage}>
                                     <i className="fas fa-times"></i>
