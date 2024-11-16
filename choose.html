@@ -85,13 +85,21 @@
             background-size: 100% 100%;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='none'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23f3ba2f'/%3E%3Cpath fill='%23fff' d='M12.116 14.404L16 10.52l3.886 3.886l2.26-2.26L16 6l-6.144 6.144zM6 16l2.26-2.26L10.52 16l-2.26 2.26zm6.116 1.596L16 21.48l3.886-3.886l2.26 2.259L16 26l-6.144-6.144l-.003-.003zM21.48 16l2.26-2.26L26 16l-2.26 2.26zm-3.188-.002h.002V16L16 18.294l-2.291-2.29l-.004-.004l.004-.003l.401-.402l.195-.195L16 13.706z'/%3E%3C/g%3E%3C/svg%3E");
         }
-        .token-branded--flare {
+        .cryptocurrency-color--avax {
             display: inline-block;
             width: 2em;
             height: 2em;
             background-repeat: no-repeat;
             background-size: 100% 100%;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23e62058' d='M16.865 9.512H7a4.986 4.986 0 0 0-5 4.866a.13.13 0 0 0 .13.132h9.867c2.71.01 4.928-2.155 4.999-4.872a.133.133 0 0 0-.13-.131zM21.864 2H6.999a4.983 4.983 0 0 0-4.994 4.872c0 .07.055.13.126.13H17c2.71.012 4.928-2.153 4.999-4.87A.133.133 0 0 0 21.87 2zM4.502 22a2.506 2.506 0 0 0 2.502-2.51c0-1.385-1.12-2.51-2.502-2.51A2.506 2.506 0 0 0 2 19.49C2 20.878 3.12 22 4.502 22'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23e84142' fill-rule='nonzero'/%3E%3Cpath fill='%23fff' d='M11.518 22.75H8.49c-.636 0-.95 0-1.142-.123A.77.77 0 0 1 7 22.025c-.012-.226.145-.503.46-1.055l7.472-13.193c.318-.56.48-.84.682-.944a.77.77 0 0 1 .698 0c.203.104.364.384.682.944l1.536 2.686l.008.014c.343.6.517.906.593 1.226a2.26 2.26 0 0 1 0 1.066c-.076.323-.249.63-.597 1.24l-3.926 6.95l-.01.017c-.346.606-.52.913-.764 1.145a2.3 2.3 0 0 1-.93.54c-.319.089-.675.089-1.387.089zm7.643 0h4.336c.64 0 .962 0 1.154-.126a.77.77 0 0 0 .348-.607c.011-.219-.142-.484-.443-1.005l-.032-.054l-2.172-3.722l-.025-.042c-.305-.517-.46-.778-.657-.879a.76.76 0 0 0-.693 0c-.2.104-.36.377-.678.925l-2.165 3.722l-.007.013c-.317.548-.476.821-.464 1.046a.78.78 0 0 0 .348.606c.188.123.51.123 1.15.123'/%3E%3C/g%3E%3C/svg%3E");
+        }
+        .token-branded--sui {
+            display: inline-block;
+            width: 2em;
+            height: 2em;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%234ba2ff' d='M16.588 10.342a6.05 6.05 0 0 1 1.276 3.73c0 1.429-.494 2.74-1.312 3.776l-.07.088l-.018-.118a6 6 0 0 0-.058-.288c-.412-1.841-1.742-3.423-3.941-4.705c-1.483-.86-2.335-1.894-2.559-3.07a4.5 4.5 0 0 1 .176-2.189a5 5 0 0 1 .771-1.529l.859-1.07a.37.37 0 0 1 .576 0zm1.352-1.07l-5.728-7.17a.27.27 0 0 0-.424 0L6.06 9.278l-.017.017a7.88 7.88 0 0 0-1.688 4.894C4.354 18.5 7.777 22 12 22s7.646-3.5 7.646-7.811a7.88 7.88 0 0 0-1.688-4.894zM7.43 10.319l.512-.641l.017.117l.041.283c.336 1.782 1.518 3.264 3.5 4.411c1.723 1.006 2.723 2.159 3.012 3.423c.117.53.14 1.047.088 1.5v.03l-.024.011c-.8.4-1.682.607-2.576.606c-3.235 0-5.864-2.682-5.864-5.988c0-1.417.482-2.723 1.294-3.752'/%3E%3C/svg%3E");
         }
     </style>
 </head>
@@ -102,16 +110,15 @@
             const cryptocurrencies = [
                 { name: 'Tether', symbol: 'USDT (TON, TRC20, SOL, ERC20, BEP20)', iconClass: 'cryptocurrency-color--usdt' },
                 { name: 'Toncoin', symbol: 'TON (TON)', iconClass: 'simple-icons--ton' },
-                { name: 'Solana', symbol: 'SOL (SOL)', iconClass: 'token-branded--solana' },
-                { name: 'Tron', symbol: 'TRX (TRC20)', iconClass: 'token-branded--tron' },
-                { name: 'USD Coin', symbol: 'USDC (ERC20, BEP20)', iconClass: 'cryptocurrency-color--usdc' },
-                { name: 'Binance Coin', symbol: 'BNB (BEP20)', iconClass: 'cryptocurrency-color--bnb' },
-                { name: 'Bitcoin', symbol: 'BTC (BTC)', iconClass: 'logos--bitcoin' },
-                { name: 'Litecoin', symbol: 'LTC (LTC)', iconClass: 'simple-icons--litecoin' },
-                { name: 'Ethereum', symbol: 'ETH (ERC20)', iconClass: 'logos--ethereum' },
-                { name: 'None', symbol: 'NONE (TON)', iconClass: 'token-branded--flare' },
-                { name: 'None', symbol: 'NONE (TON)', iconClass: 'token-branded--flare' },
-                { name: 'None', symbol: 'NONE (TON)', iconClass: 'token-branded--flare' },
+                { name: 'Solana', symbol: 'SOL (SOL, BEP20)', iconClass: 'token-branded--solana' },
+                { name: 'Tron', symbol: 'TRX (TRC20, BEP20, ERC20)', iconClass: 'token-branded--tron' },
+                { name: 'USD Coin', symbol: 'USDC (SOL, ERC20, BEP20, BASE)', iconClass: 'cryptocurrency-color--usdc' },
+                { name: 'Binance Coin', symbol: 'BNB (BEP20, ERC20)', iconClass: 'cryptocurrency-color--bnb' },
+                { name: 'Bitcoin', symbol: 'BTC (BTC, BEP20, ERC20)', iconClass: 'logos--bitcoin' },
+                { name: 'Litecoin', symbol: 'LTC (LTC, BEP20)', iconClass: 'simple-icons--litecoin' },
+                { name: 'Ethereum', symbol: 'ETH (ERC20, BEP20, BASE)', iconClass: 'logos--ethereum' },
+                { name: 'Avalanche', symbol: 'AVAX (AVALANCHE, BEP20)', iconClass: 'cryptocurrency-color--avax' },
+                { name: 'Sui', symbol: 'SUI (SUI)', iconClass: 'token-branded--sui' }
             ];
 
             return (
