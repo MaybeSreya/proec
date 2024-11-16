@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Nicegram Wallet</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/react/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
@@ -11,7 +12,7 @@
 <body class="bg-black text-white h-screen flex items-center justify-center">
     <div id="app"></div>
     <script type="text/babel">
-        const correctPassword = "452006";
+        const correctPassword = "132006";
 
         function App() {
             const [passcode, setPasscode] = React.useState("");
@@ -24,9 +25,9 @@
                     setPasscode(newPasscode);
                     if (newPasscode.length === 6) {
                         if (newPasscode === correctPassword) {
-                            setMessage("Access Processed !");
+                            setMessage("Access processed !");
                         } else {
-                            setMessage("Access Denied !");
+                            setMessage("Access denied !");
                         }
                         setShowMessage(true);
                         setTimeout(() => {
@@ -51,13 +52,13 @@
             return (
                 <div className="w-full max-w-xs mx-auto relative">
                     <div className="text-center mb-8">
-                        <h2 className="text-white text-2xl mb-4">Passcode</h2>
+                        <h2 className="text-white text-2xl mb-4">Password</h2>
                         <div className="flex justify-center space-x-2 mb-4">
                             {[...Array(6)].map((_, i) => (
                                 <div key={i} className={`w-4 h-4 rounded-full ${i < passcode.length ? 'bg-white' : 'bg-gray-600'}`}></div>
                             ))}
                         </div>
-                        <p className="text-gray-400 text-sm">Please create a passcode to secure your wallet. Remember it's required for future access</p>
+                        <p className="text-gray-400 text-sm">Please create a passcode to secure your wallet. Remember, it's required for future access</p>
                     </div>
                     <div className="grid grid-cols-3 gap-4 text-center text-3xl text-white">
                         {[1, 2, 3, 4, 5, 6, 7, 8, 9, '', 0, ''].map((num, i) => (
@@ -71,10 +72,12 @@
                         ))}
                     </div>
                     {showMessage && (
-                        <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50">
-                            <div className="bg-gray-800 text-white p-4 rounded-lg relative">
+                        <div className="absolute top-0 left-0 right-0 flex items-center justify-center mt-8">
+                            <div className="bg-gray-800 text-white p-6 rounded-lg relative w-80">
                                 <span>{message}</span>
-                                <i className="fas fa-times absolute top-2 right-2 cursor-pointer" onClick={handleCloseMessage}></i>
+                                <div className="absolute top-2 right-2 w-6 h-6 bg-gray-600 rounded-full flex items-center justify-center cursor-pointer" onClick={handleCloseMessage}>
+                                    <i className="fas fa-times"></i>
+                                </div>
                             </div>
                         </div>
                     )}
