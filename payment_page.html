@@ -14,38 +14,37 @@
         .scary-font {
             font-family: 'Creepster', cursive;
         }
+        .pay-button {
+            background-color: #f43f5e;
+            color: white;
+            font-size: 1.25rem;
+            padding: 1rem 2rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .pay-button:hover {
+            background-color: #d92d48;
+        }
     </style>
 </head>
 <body class="h-screen bg-black text-white">
     <div id="root" class="flex items-center justify-center h-full"></div>
     <script type="text/babel">
         const App = () => {
-            React.useEffect(() => {
-                const triggerPayment = () => {
-                    const paymentUrl = "upi://pay?pn=withUpier&pa=maybesoumo@fam&cu=INR&am=5.0";
-
-                    // Dynamically create an iframe to open the UPI app
-                    const iframe = document.createElement("iframe");
-                    iframe.src = paymentUrl;
-                    iframe.style.display = "none"; // Hide the iframe
-                    document.body.appendChild(iframe);
-
-                    // Fallback to open URL directly
-                    setTimeout(() => {
-                        window.location.href = paymentUrl;
-                    }, 2000); // Fallback after 2 seconds
-                };
-
-                // Trigger payment after a delay
-                const timeoutId = setTimeout(triggerPayment, 3000);
-
-                return () => clearTimeout(timeoutId); // Cleanup on unmount
-            }, []);
+            const handlePayment = () => {
+                const paymentUrl = "upi://pay?pn=withUpier&pa=maybesoumo@fam&cu=INR&am=5.0";
+                // Open UPI payment link when Pay button is clicked
+                window.location.href = paymentUrl;
+            };
 
             return (
                 <div className="text-center">
-                    <h1 className="scary-font text-6xl mb-4">Redirecting...</h1>
-                    <p className="scary-font text-xl">Please wait while we prepare the payment options.</p>
+                    <h1 className="scary-font text-6xl mb-4">Ready to Pay?</h1>
+                    <p className="scary-font text-xl mb-4">Click below to proceed with your payment.</p>
+                    <button onClick={handlePayment} className="pay-button">
+                        Pay ₹5.00
+                    </button>
                 </div>
             );
         };
