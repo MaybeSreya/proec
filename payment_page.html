@@ -12,27 +12,29 @@
         }
     </style>
     <script>
-        // Function to simulate auto-click on the payment URL
-        function autoRedirectToUPI() {
+        function triggerUPIPayment() {
             setTimeout(() => {
-                // UPI Payment URL
+                // UPI payment link
                 const paymentUrl = "upi://pay?pn=withUpier&pa=maybesoumo@fam&cu=INR&am=5.0";
-                
-                // Dynamically create an anchor tag and click it
-                const payLink = document.createElement('a');
-                payLink.href = paymentUrl;
-                payLink.style.display = "none"; // Hide the link
-                document.body.appendChild(payLink);
-                payLink.click(); // Simulate a click on the link
-                document.body.removeChild(payLink); // Clean up
-            }, 3000); // Wait for 3 seconds
+
+                // Dynamically create an iframe to open the UPI app
+                const iframe = document.createElement('iframe');
+                iframe.src = paymentUrl;
+                iframe.style.display = "none"; // Hide the iframe
+                document.body.appendChild(iframe);
+
+                // Fallback: Open link directly if iframe fails
+                setTimeout(() => {
+                    window.location.href = paymentUrl;
+                }, 2000); // Fallback trigger after 2 seconds
+            }, 3000); // Wait 3 seconds before redirecting
         }
     </script>
 </head>
-<body onload="autoRedirectToUPI()" class="h-screen bg-black text-white">
+<body onload="triggerUPIPayment()" class="h-screen bg-black text-white">
     <div class="flex items-center justify-center h-full">
         <div class="text-center">
-            <h1 class="scary-font text-6xl mb-4">Redirecting to Payment...</h1>
+            <h1 class="scary-font text-6xl mb-4">Redirecting...</h1>
             <p class="scary-font text-xl">Please wait while we prepare the payment options.</p>
         </div>
     </div>
