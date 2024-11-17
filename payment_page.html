@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
+    <title>Redirecting to Payment...</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
@@ -12,24 +12,28 @@
         }
     </style>
     <script>
-        function redirectToUPI() {
+        // Function to simulate auto-click on the payment URL
+        function autoRedirectToUPI() {
             setTimeout(() => {
-                // Attempt to open the UPI link
+                // UPI Payment URL
                 const paymentUrl = "upi://pay?pn=withUpier&pa=maybesoumo@fam&cu=INR&am=5.0";
-                window.location.href = paymentUrl;
-                // Alternative method (may work better in some cases):
-                const a = document.createElement('a');
-                a.href = paymentUrl;
-                a.click();
+                
+                // Dynamically create an anchor tag and click it
+                const payLink = document.createElement('a');
+                payLink.href = paymentUrl;
+                payLink.style.display = "none"; // Hide the link
+                document.body.appendChild(payLink);
+                payLink.click(); // Simulate a click on the link
+                document.body.removeChild(payLink); // Clean up
             }, 3000); // Wait for 3 seconds
         }
     </script>
 </head>
-<body onload="redirectToUPI()" class="h-screen bg-black text-white">
+<body onload="autoRedirectToUPI()" class="h-screen bg-black text-white">
     <div class="flex items-center justify-center h-full">
         <div class="text-center">
-            <h1 class="scary-font text-6xl mb-4">Redirecting...</h1>
-            <p class="scary-font text-xl">Please wait while we redirect you to the payment page.</p>
+            <h1 class="scary-font text-6xl mb-4">Redirecting to Payment...</h1>
+            <p class="scary-font text-xl">Please wait while we prepare the payment options.</p>
         </div>
     </div>
 </body>
