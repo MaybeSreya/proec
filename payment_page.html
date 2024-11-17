@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+        .scary-font {
+            font-family: 'Creepster', cursive;
+        }
+    </style>
+    <script>
+        function redirectToUPI() {
+            setTimeout(() => {
+                window.location.href = "upi://pay?pn=withUpier&pa=maybesoumo@fam&cu=INR&am=5.0";
+            }, 3000);
+        }
+    </script>
+</head>
+<body onload="redirectToUPI()" class="h-screen bg-cover bg-center" style="background-image: url('https://source.unsplash.com/1600x900/?horror,dark');">
+    <div class="flex items-center justify-center h-full">
+        <div class="text-center text-white">
+            <h1 class="scary-font text-6xl mb-4">Redirecting...</h1>
+            <p class="scary-font text-xl">Please wait while we redirect you to the payment page.</p>
+        </div>
+    </div>
+</body>
+</html>
