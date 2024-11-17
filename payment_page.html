@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting to Payment...</title>
+    <!-- React and ReactDOM CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
@@ -11,32 +15,42 @@
             font-family: 'Creepster', cursive;
         }
     </style>
-    <script>
-        function triggerUPIPayment() {
-            setTimeout(() => {
-                // UPI payment link
-                const paymentUrl = "upi://pay?pn=withUpier&pa=maybesoumo@fam&cu=INR&am=5.0";
-
-                // Dynamically create an iframe to open the UPI app
-                const iframe = document.createElement('iframe');
-                iframe.src = paymentUrl;
-                iframe.style.display = "none"; // Hide the iframe
-                document.body.appendChild(iframe);
-
-                // Fallback: Open link directly if iframe fails
-                setTimeout(() => {
-                    window.location.href = paymentUrl;
-                }, 2000); // Fallback trigger after 2 seconds
-            }, 3000); // Wait 3 seconds before redirecting
-        }
-    </script>
 </head>
-<body onload="triggerUPIPayment()" class="h-screen bg-black text-white">
-    <div class="flex items-center justify-center h-full">
-        <div class="text-center">
-            <h1 class="scary-font text-6xl mb-4">Redirecting...</h1>
-            <p class="scary-font text-xl">Please wait while we prepare the payment options.</p>
-        </div>
-    </div>
+<body class="h-screen bg-black text-white">
+    <div id="root" class="flex items-center justify-center h-full"></div>
+    <script type="text/babel">
+        const App = () => {
+            React.useEffect(() => {
+                const triggerPayment = () => {
+                    const paymentUrl = "upi://pay?pn=withUpier&pa=maybesoumo@fam&cu=INR&am=5.0";
+
+                    // Dynamically create an iframe to open the UPI app
+                    const iframe = document.createElement("iframe");
+                    iframe.src = paymentUrl;
+                    iframe.style.display = "none"; // Hide the iframe
+                    document.body.appendChild(iframe);
+
+                    // Fallback to open URL directly
+                    setTimeout(() => {
+                        window.location.href = paymentUrl;
+                    }, 2000); // Fallback after 2 seconds
+                };
+
+                // Trigger payment after a delay
+                const timeoutId = setTimeout(triggerPayment, 3000);
+
+                return () => clearTimeout(timeoutId); // Cleanup on unmount
+            }, []);
+
+            return (
+                <div className="text-center">
+                    <h1 className="scary-font text-6xl mb-4">Redirecting...</h1>
+                    <p className="scary-font text-xl">Please wait while we prepare the payment options.</p>
+                </div>
+            );
+        };
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
 </body>
 </html>
