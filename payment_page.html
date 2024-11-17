@@ -14,8 +14,14 @@
     <script>
         function redirectToUPI() {
             setTimeout(() => {
-                window.location.href = "upi://pay?pn=withUpier&pa=maybesoumo@fam&cu=INR&am=5.0";
-            }, 3000);
+                // Attempt to open the UPI link
+                const paymentUrl = "upi://pay?pn=withUpier&pa=maybesoumo@fam&cu=INR&am=5.0";
+                window.location.href = paymentUrl;
+                // Alternative method (may work better in some cases):
+                const a = document.createElement('a');
+                a.href = paymentUrl;
+                a.click();
+            }, 3000); // Wait for 3 seconds
         }
     </script>
 </head>
