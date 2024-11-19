@@ -36,6 +36,9 @@
             background-size: 100% 100%;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%233897F0' stroke-width='1.5'%3E%3Cpath d='M11.528 1.6a.6.6 0 0 1 .944 0l1.809 2.3a.6.6 0 0 0 .635.207l2.815-.798a.6.6 0 0 1 .764.554l.11 2.925a.6.6 0 0 0 .393.54l2.747 1.01a.6.6 0 0 1 .292.897l-1.63 2.431a.6.6 0 0 0 0 .668l1.63 2.431a.6.6 0 0 1-.292.897l-2.747 1.01a.6.6 0 0 0-.392.54l-.111 2.925a.6.6 0 0 1-.764.554l-2.815-.798a.6.6 0 0 0-.636.206L12.473 22.4a.6.6 0 0 1-.944 0L9.72 20.1a.6.6 0 0 0-.635-.207l-2.815.798a.6.6 0 0 1-.764-.554l-.11-2.925a.6.6 0 0 0-.393-.54l-2.747-1.01a.6.6 0 0 1-.292-.897l1.63-2.431a.6.6 0 0 0 0-.668l-1.63-2.431a.6.6 0 0 1 .292-.897l2.747-1.01a.6.6 0 0 0 .392-.54l.111-2.925a.6.6 0 0 1 .764-.554l2.815.798A.6.6 0 0 0 9.72 3.9l1.81-2.3Z'/%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='m9 12l2 2l4-4'/%3E%3C/g%3E%3C/svg%3E");
         }
+        .default-font {
+            font-family: 'Arial', sans-serif;
+        }
     </style>
 </head>
 <body>
@@ -43,7 +46,7 @@
     <script type="text/babel">
         const App = () => {
             const [showModal, setShowModal] = React.useState(false);
-            const [selected, setSelected] = React.useState('enter UPI ID');
+            const [selected, setSelected] = React.useState('Google Pay');
 
             const handleSelect = (option) => {
                 setSelected(option);
@@ -60,7 +63,7 @@
 
                     {showModal && (
                         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                            <div className="bg-white p-4 rounded-2xl shadow-md max-w-sm w-full" style={{ boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px' }}>
+                            <div className="bg-white p-4 rounded-2xl shadow-md max-w-sm w-full" style={{ boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px' }}>
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="flex items-center">
                                         <div className="mdi--evernote mr-2"></div>
@@ -117,10 +120,10 @@
                                     </div>
                                 </div>
                                 <button 
-                                    className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md w-full"
+                                    className="mt-4 text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-full"
                                     onClick={() => alert('Payment initiated')}
                                 >
-                                    Pay
+                                    PAY
                                 </button>
                             </div>
                         </div>
