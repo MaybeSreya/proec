@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Settings</title>
+    <title>Airdrop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/react/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
@@ -9,13 +9,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap');
-        .token-branded--binance-smart-chain {
+        .simple-icons--okx {
             display: inline-block;
             width: 30px;
             height: 30px;
             background-repeat: no-repeat;
             background-size: 100% 100%;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23f0b90b' d='M6.545 5.061L12 2l5.456 3.061l-2 1.133L12 4.261L8.55 6.194zm10.91 3.867l-2-1.134L12 9.728L8.55 7.794L6.545 8.928v2.26l3.444 1.934v3.861L12 18.117l2.006-1.134v-3.86l3.45-1.934zm0 6.128v-2.267l-2 1.133v2.261zm1.429.8l-3.45 1.927v2.267l5.455-3.067v-6.122l-2.005 1.128zm-2.006-8.862l2 1.134v2.26l2.011-1.127V6.994l-2.005-1.133L16.878 7zM9.989 18.606v2.26L12 22l2.006-1.133V18.61L12 19.74l-2.005-1.134zM6.545 15.05l2 1.133v-2.26l-2-1.134v2.267zm3.444-8.056L12 8.128l2.006-1.134L12 5.861L9.995 7zM5.117 8.128l2.005-1.134l-2-1.133L3.112 7v2.267l2.005 1.128zm0 3.861L3.11 10.861v6.122l5.456 3.067v-2.272L5.122 15.85v-3.867z'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M7.15 8.685c.03.02.05.06.05.1v6.44c0 .04-.02.08-.05.1a.17.17 0 0 1-.11.05H.16a.17.17 0 0 1-.11-.05a.14.14 0 0 1-.05-.1v-6.44c0-.04.02-.08.05-.1a.17.17 0 0 1 .11-.05h6.88c.04 0 .08.02.11.05m-2.35 2.35a.14.14 0 0 0-.05-.1a.16.16 0 0 0-.11-.05H2.56a.17.17 0 0 0-.11.04a.14.14 0 0 0-.05.1v1.95c0 .04.02.08.05.1c.03.04.07.05.11.05h2.08c.04 0 .08-.01.11-.04a.14.14 0 0 0 .05-.1zm16.8 0v1.94c0 .09-.07.15-.16.15h-2.08c-.09 0-.16-.06-.16-.15v-1.94c0-.08.07-.15.16-.15h2.08c.09 0 .16.06.16.15m-2.4-2.25v1.95c0 .08-.07.15-.16.15h-2.08c-.09 0-.16-.07-.16-.15v-1.95c0-.08.07-.15.16-.15h2.08c.09 0 .16.07.16.15m4.8 0v1.95c0 .08-.07.15-.16.15h-2.08c-.09 0-.16-.07-.16-.15v-1.95c0-.08.07-.15.16-.15h2.08c.09 0 .16.07.16.15m-4.8 4.5v1.94c0 .08-.07.15-.16.15h-2.08c-.09 0-.16-.07-.16-.15v-1.95c0-.08.07-.15.16-.15h2.08c.09 0 .16.07.16.15zm4.8 0v1.94c0 .08-.07.15-.16.15h-2.08c-.09 0-.16-.07-.16-.15v-1.95c0-.08.07-.15.16-.15h2.08c.09 0 .16.07.16.15zm-8.4-4.5v1.95c0 .08-.07.15-.16.15h-2.08c-.09 0-.16-.07-.16-.15v-1.95c0-.08.07-.15.16-.15h2.08c.09 0 .16.07.16.15m0 4.5v1.94c0 .08-.07.15-.16.15h-2.08c-.09 0-.16-.07-.16-.15v-1.95c0-.08.07-.15.16-.15h2.08c.09 0 .16.07.16.15zm-2.4-.3a.16.16 0 0 1-.16.15H10.8v2.08c0 .04-.02.08-.05.11a.17.17 0 0 1-.11.04H8.56a.17.17 0 0 1-.12-.04a.14.14 0 0 1-.04-.1v-6.45c0-.04.01-.08.04-.1a.17.17 0 0 1 .12-.05h2.08c.04 0 .08.02.11.05c.03.02.05.06.05.1v2.1h2.24c.04 0 .08.01.11.04s.05.07.05.1z'/%3E%3C/svg%3E");
+        }
+        .simple-icons--binance {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23f0b90b' d='m16.624 13.92l2.718 2.716l-7.353 7.353l-7.353-7.352l2.717-2.717l4.636 4.66zm4.637-4.636L24 12l-2.715 2.716L18.568 12zm-9.272 0l2.716 2.692l-2.717 2.717L9.272 12zm-9.273 0L5.41 12l-2.692 2.692L0 12zM11.99.012l7.35 7.328l-2.717 2.715L11.99 5.42l-4.636 4.66l-2.717-2.716z'/%3E%3C/svg%3E");
+        }
+        .token-branded--kucoin {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2323af91' d='m8.671 12l5.817 5.926l3.68-3.736a1.66 1.66 0 0 1 2.351 0a1.726 1.726 0 0 1 0 2.39l-4.85 4.937a1.674 1.674 0 0 1-2.352 0l-7.101-7.115v4.225c.012.904-.693 1.672-1.608 1.69c-.92-.012-1.62-.782-1.608-1.69V5.373c0-.933.685-1.69 1.608-1.69c.911 0 1.608.757 1.608 1.69v4.225l7.102-7.115a1.674 1.674 0 0 1 2.352 0l4.838 4.936a1.724 1.724 0 0 1 0 2.39a1.66 1.66 0 0 1-2.34 0l-3.68-3.735zm5.828-1.69c.912 0 1.654.756 1.654 1.69s-.742 1.69-1.654 1.69s-1.665-.756-1.665-1.69s.743-1.69 1.665-1.69'/%3E%3C/svg%3E");
+        }
+        .token-branded--trust {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none'%3E%3Cpath fill='%230500ff' d='M3 4.89L12 2v20c-6.429-2.667-9-7.778-9-10.666z'/%3E%3Cpath fill='url(%23tokenBrandedTrust0)' d='M21 4.89L12 2v20c6.429-2.667 9-7.778 9-10.666z'/%3E%3Cdefs%3E%3ClinearGradient id='tokenBrandedTrust0' x1='18.61' x2='11.963' y1='.599' y2='21.774' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='.02' stop-color='%2300f'/%3E%3Cstop offset='.08' stop-color='%230094ff'/%3E%3Cstop offset='.16' stop-color='%2348ff91'/%3E%3Cstop offset='.42' stop-color='%230094ff'/%3E%3Cstop offset='.68' stop-color='%230038ff'/%3E%3Cstop offset='.9' stop-color='%230500ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/g%3E%3C/svg%3E");
         }
     </style>
 </head>
@@ -35,7 +59,7 @@
                     {showModal && (
                         <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50">
                             <div className="bg-gray-800 p-4 rounded-lg text-center">
-                                <p>Coming Soon!</p>
+                                <p>Coming Soon !</p>
                             </div>
                         </div>
                     )}
@@ -43,13 +67,13 @@
                         <img src="https://placehold.co/40x40" alt="User avatar" className="rounded-full mr-4" />
                         <div>
                             <div className="text-lg">nvmsreya.tg</div>
-                            <div className="text-sm text-gray-400">0.00 $FIZZ</div>
+                            <div className="text-sm text-gray-400" style={{ fontFamily: 'sans-serif' }}>0.00 $FIZZ</div>
                         </div>
                     </div>
                     <div className="bg-gray-800 p-4 rounded-2xl mb-4">
                         {[
                             { icon: "fas fa-key", text: "Security & Apps" },
-                            { icon: "fas fa-link", text: "Recover inviter" },
+                            { icon: "fas fa-link", text: "Invite Friends" },
                             { icon: "fas fa-network-wired", text: "My networks" },
                             { icon: "fas fa-globe", text: "Language" },
                             { icon: "fas fa-fire", text: "Firedrops BETA" },
@@ -71,7 +95,10 @@
                         </div>
                         <div className="flex-grow">Link Web3 Wallet</div>
                         <div className="flex space-x-2">
-                            <div className="token-branded--binance-smart-chain"></div>
+                            <div className="simple-icons--okx"></div>
+                            <div className="token-branded--trust"></div>
+                            <div className="simple-icons--binance"></div>
+                            <div className="token-branded--kucoin"></div>
                         </div>
                     </div>
                     <div className="bg-transparent p-4 rounded-2xl mt-4 flex items-center border border-red-500">
