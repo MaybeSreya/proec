@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap');
         .simple-icons--okx {
@@ -48,17 +49,13 @@
     <script type="text/babel">
         const App = () => {
             const [showModal, setShowModal] = React.useState(false);
-            const [isTelegram, setIsTelegram] = React.useState(false);
-            const [userName, setUserName] = React.useState('nvmsreya.tg');
-            const [userAvatar, setUserAvatar] = React.useState('https://placehold.co/40x40');
+            const [user, setUser] = React.useState(null);
 
             React.useEffect(() => {
-                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-                if (/Telegram/i.test(userAgent)) {
-                    setIsTelegram(true);
-                    // Simulate fetching user data from Telegram
-                    setUserName('user123.tg');
-                    setUserAvatar('https://placehold.co/40x40?text=User+Avatar');
+                if (window.Telegram.WebApp.initDataUnsafe.user) {
+                    setUser(window.Telegram.WebApp.initDataUnsafe.user);
+                } else {
+                    document.body.innerHTML = '<div class="flex items-center justify-center h-screen"><div class="text-center"><p class="text-lg">Please open this app in Telegram.</p><a href="https://t.me/your_bot_username" class="text-blue-500 underline">Open in Telegram</a></div></div>';
                 }
             }, []);
 
@@ -67,16 +64,7 @@
                 setTimeout(() => setShowModal(false), 2000);
             };
 
-            if (!isTelegram) {
-                return (
-                    <div className="flex items-center justify-center h-screen">
-                        <div className="text-center">
-                            <p className="text-2xl mb-4">Please open this app in your Telegram</p>
-                            <a href="https://telegram.org" className="text-blue-500 underline">Open Telegram</a>
-                        </div>
-                    </div>
-                );
-            }
+            if (!user) return null;
 
             return (
                 <div className="p-4 relative">
@@ -88,9 +76,9 @@
                         </div>
                     )}
                     <div className="bg-gray-800 p-4 rounded-2xl mb-4 flex items-center">
-                        <img src={userAvatar} alt="User avatar" className="rounded-full mr-4" />
+                        <img src={user.photo_url || "https://placehold.co/40x40"} alt="User avatar" className="rounded-full mr-4" />
                         <div>
-                            <div className="text-lg">{userName}</div>
+                            <div className="text-lg">{user.username || user.first_name}</div>
                             <div className="text-sm text-gray-400" style={{ fontFamily: 'sans-serif' }}>0.00 $FIZZ</div>
                         </div>
                     </div>
@@ -141,4 +129,4 @@
         ReactDOM.render(<App />, document.getElementById('app'));
     </script>
 </body>
-  </html>
+</html>
