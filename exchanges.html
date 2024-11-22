@@ -100,7 +100,7 @@
                                         <img src={exchange.img} alt={`${exchange.name} logo`} />
                                         <div className="name">{exchange.name}</div>
                                     </div>
-                                    <div className="view">
+                                    <div className="view" onClick={() => handleViewClick(exchange.link)}>
                                         VIEW <i className="fas fa-external-link-alt"></i>
                                     </div>
                                 </div>
