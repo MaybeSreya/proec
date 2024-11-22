@@ -1,0 +1,117 @@
+<html>
+<head>
+    <title>expressFi : The Memecoin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
+        
+        body {
+            background-color: #3b2f2f;
+            font-family: 'Arial', sans-serif;
+        }
+        .header {
+            background-color: #3b2f2f;
+            color: white;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .content {
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+        .content h1 {
+            font-family: 'Rowdies', cursive;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: -1px -1px 0 #f0c040, 1px -1px 0 #f0c040, -1px 1px 0 #f0c040, 1px 1px 0 #f0c040;
+        }
+        .content h1 .highlight {
+            color: #ff6666; /* Lighter red color */
+        }
+        .exchange-list {
+            background-color: #4a3a3a;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .exchange-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #5a4a4a;
+        }
+        .exchange-item:last-child {
+            border-bottom: none;
+        }
+        .exchange-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .exchange-item .name {
+            font-size: 18px;
+            color: white;
+        }
+        .exchange-item .view {
+            color: #f0c040;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+        .exchange-item .view i {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const App = () => {
+            const exchanges = [
+                { name: 'OKX', img: 'https://placehold.co/40x40', link: '#' },
+                { name: 'Bybit', img: 'https://placehold.co/40x40', link: '#' },
+                { name: 'KuCoin', img: 'https://placehold.co/40x40', link: '#' },
+                { name: 'Bitget', img: 'https://placehold.co/40x40', link: '#' },
+                { name: 'Gate.io', img: 'https://placehold.co/40x40', link: '#' },
+                { name: 'HTX', img: 'https://placehold.co/40x40', link: '#' },
+                { name: 'MEXC', img: 'https://placehold.co/40x40', link: '#' },
+                { name: 'BingX', img: 'https://placehold.co/40x40', link: '#' },
+            ];
+
+            return (
+                <div>
+                    <div className="header"></div>
+                    <div className="content">
+                        <h1><span className="highlight">EXPRESS</span> IS COMING TO THESE EXCHANGES !</h1>
+                        <div className="exchange-list">
+                            {exchanges.map((exchange, index) => (
+                                <div key={index} className="exchange-item">
+                                    <div className="flex items-center">
+                                        <img src={exchange.img} alt={`${exchange.name} logo`} />
+                                        <div className="name">{exchange.name}</div>
+                                    </div>
+                                    <div className="view">
+                                        VIEW <i className="fas fa-external-link-alt"></i>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
